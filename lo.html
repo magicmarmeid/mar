@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LO — Life Operating System</title>
+<meta name="description" content="LO is an ambient AI operating system that replaces the smartphone as the center of daily life, returning human attention to the physical world.">
+<meta property="og:title" content="LO — Life Operating System">
+<meta property="og:description" content="Technology should compete for less of your attention, not more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --claro:#f5f0e8; --claro-suave:rgba(245,240,232,.78);
+    --oro:#d9b36a; --lila:#cdb7ec;
+    --vidrio:rgba(20,12,26,.62);
+    --borde:rgba(255,255,255,.16);
+    --linea:rgba(255,255,255,.22);
+    --noche:#171020;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--noche);scroll-behavior:smooth}
+  body{
+    background:transparent;color:var(--claro);
+    font-family:'Newsreader',Georgia,serif;font-size:18px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--oro);color:#241a2e}
+  #fondo{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+  a:focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:2px}
+
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(18,11,24,.5);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--borde);
+  }
+  nav{max-width:880px;margin:0 auto;padding:0 28px;height:64px;
+    display:flex;align-items:center;justify-content:space-between}
+  .mono{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+    font-size:1.35rem;color:var(--claro);text-decoration:none}
+  .volver{font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--claro-suave);text-decoration:none}
+  .volver:hover{color:var(--oro)}
+
+  .doc-zona{max-width:880px;margin:0 auto;padding:60px 28px 100px}
+  .doc{
+    background:var(--vidrio);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:1px solid var(--borde);border-radius:16px;
+    padding:72px 72px 80px;
+  }
+
+  .label{font-family:'Archivo',sans-serif;font-size:.7rem;font-weight:600;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--oro)}
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:clamp(2.6rem,7vw,4.2rem);line-height:1.02;margin-top:18px;color:var(--claro);
+  }
+  h1 em{font-style:italic;color:var(--oro)}
+  .sub{margin-top:16px;font-size:1.15rem;font-weight:300;color:var(--claro-suave);max-width:32em}
+
+  .fundacional{
+    margin:56px 0;padding:40px 36px;text-align:center;
+    border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  }
+  .fundacional p{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.3;color:var(--claro);
+  }
+  .fundacional span{display:block;margin-top:14px;font-family:'Archivo',sans-serif;
+    font-style:normal;font-size:.66rem;font-weight:600;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--oro)}
+
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+    font-size:clamp(1.6rem,4vw,2.1rem);margin:60px 0 16px;color:var(--claro);
+  }
+  p.t{font-weight:300;color:var(--claro-suave);max-width:38em;margin-top:14px}
+  p.t b{font-weight:500;color:var(--oro)}
+  p.t i{color:var(--lila)}
+  .aparte{
+    margin-top:22px;padding-left:18px;border-left:2px solid var(--oro);
+    font-style:italic;font-weight:300;color:var(--claro-suave);max-width:32em;
+  }
+
+  .principios{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:28px;margin-top:28px}
+  .principio{border-top:1px solid var(--linea);padding-top:16px}
+  .principio .n{font-family:'Archivo',sans-serif;font-size:.66rem;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--oro)}
+  .principio h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.3rem;
+    margin-top:8px;line-height:1.15;color:var(--claro)}
+  .principio p{margin-top:8px;font-size:.92rem;font-weight:300;color:var(--claro-suave)}
+
+  ul.inversa{list-style:none;margin-top:18px;max-width:36em}
+  ul.inversa li{
+    position:relative;padding-left:18px;margin-top:10px;
+    font-weight:300;color:var(--claro-suave);
+  }
+  ul.inversa li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;
+    border-radius:50%;background:var(--lila)}
+
+  .oneliner{
+    margin-top:66px;padding:40px 36px;border:1px solid var(--borde);border-radius:12px;
+    background:rgba(255,255,255,.05);
+  }
+  .oneliner .label{display:block;margin-bottom:14px}
+  .oneliner p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,3vw,1.7rem);
+    font-weight:500;line-height:1.35;color:var(--claro)}
+  .contacto{
+    display:inline-block;margin-top:24px;
+    font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--lila);
+    text-decoration:none;border-bottom:1px solid var(--oro);padding-bottom:4px;
+  }
+  .contacto:hover{color:var(--claro)}
+
+  footer{border-top:1px solid var(--borde);
+    background:rgba(18,11,24,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .pie{max-width:880px;margin:0 auto;padding:32px 28px 44px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-family:'Archivo',sans-serif;font-size:.72rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--claro-suave)}
+
+  @media (max-width:720px){
+    .doc{padding:44px 28px 52px}
+    .fundacional{padding:30px 20px}
+    .oneliner{padding:30px 22px}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="fondo" aria-hidden="true"></canvas>
+
+<header>
+  <nav>
+    <a class="mono" href="index.html">m/i</a>
+    <a class="volver" href="index.html#creando">← volver</a>
+  </nav>
+</header>
+
+<main class="doc-zona">
+  <div class="doc">
+
+    <span class="label">white paper v0.1 · one-pager</span>
+    <h1>LO<br><em>Life Operating System</em></h1>
+    <p class="sub">Technology that gives your attention back.</p>
+
+    <div class="fundacional">
+      <p>Technology should compete for less of your attention, not more.</p>
+      <span>founding line</span>
+    </div>
+
+    <h2>The problem</h2>
+    <p class="t">For thirty years, every technological leap has pulled us closer to a screen —
+    desktop, laptop, smartphone. The industry optimizes a broken metric: <b>screen time</b>.
+    Every app fights for a few more minutes; every notification interrupts a conversation;
+    every algorithm learns how to keep us looking down.</p>
+    <p class="t">The phone stopped being a tool. It became the place where life happens.
+    And AI, deployed as chat, risks deepening exactly that model: more interaction,
+    more interface, more time behind glass.</p>
+
+    <h2>Our thesis</h2>
+    <p class="t">The greatest contribution of AI is not helping people talk more with technology.
+    It is making them need to talk to it <b>less</b>. The best technology is the kind whose
+    presence you almost forget — because it works silently in your favor.</p>
+    <p class="aparte">Technology should disappear. Not because it stops existing,
+    but because it stops demanding attention.</p>
+
+    <h2>What LO is</h2>
+    <p class="t">LO is ambient AI infrastructure distributed through the space where you live.
+    The phone runs part of the system; <b>the experience happens in the environment</b> —
+    through minimal devices that vanish into routine: smart earbuds, ambient cameras,
+    small home sensors, voice, automation, contextual intelligence.</p>
+    <p class="t">The first gesture happens at the front door: you place your phone in a dock,
+    and LO takes over. The phone stays connected for sync and processing, but disappears
+    from daily interaction. What vanishes isn't the technology — it's the visual dependence on it.</p>
+    <p class="t">The ear becomes the interface. Not every call, not every notification —
+    only what actually matters: <i>"Your dad is calling." "Time to leave to arrive on time."</i>
+    Silence returns as the default state. At home, you can cook a full recipe, record and
+    direct multi-camera content, train, read, or play with your kids — without holding a screen.</p>
+
+    <h2>A life OS, not an app OS</h2>
+    <p class="t">LO understands health, sleep, energy, calendar, work, relationships, food,
+    creativity, goals, and context — all of it existing to answer a single question:
+    <b>what is the right next step for this person, right now?</b> No dashboards.
+    Context when it's useful. Then it disappears.</p>
+
+    <h2>Design principles</h2>
+    <div class="principios">
+      <div class="principio"><span class="n">01</span><h3>Presence over productivity</h3>
+        <p>Productivity matters. Presence matters more.</p></div>
+      <div class="principio"><span class="n">02</span><h3>The world is the interface</h3>
+        <p>People should interact with their environment, not with a screen.</p></div>
+      <div class="principio"><span class="n">03</span><h3>Silence by default</h3>
+        <p>Silence is the natural state. Interruption must be exceptional.</p></div>
+      <div class="principio"><span class="n">04</span><h3>Invisible intelligence</h3>
+        <p>The best AI doesn't need to constantly prove it exists.</p></div>
+      <div class="principio"><span class="n">05</span><h3>Attention is sacred</h3>
+        <p>Human attention is finite. The entire system is designed to protect it.</p></div>
+    </div>
+
+    <h2>Measuring success — inverted</h2>
+    <p class="t">Most products celebrate daily active users, sessions, minutes, retention.
+    LO measures the opposite:</p>
+    <ul class="inversa">
+      <li>How many times did the user need to pick up the phone?</li>
+      <li>How much time was spent present, with family?</li>
+      <li>How many tasks were completed without looking at a screen?</li>
+      <li>How many interruptions did the system prevent?</li>
+      <li>How many moments of creation happened without friction?</li>
+    </ul>
+    <p class="t">The goal is not to maximize the use of LO. It is to minimize the need
+    to use any interface at all.</p>
+
+    <h2>Vision</h2>
+    <p class="t">We don't believe the future is spending more time talking to artificial
+    intelligence. We believe the future is spending more time talking <b>to each other</b>.
+    LO's mission is not to bring you closer to technology — it is to use technology
+    to bring you back to the world.</p>
+
+    <div class="oneliner">
+      <span class="label">in one sentence</span>
+      <p>LO is an ambient AI operating system that replaces the smartphone as the center
+      of daily life, using intelligence to return human attention to the physical world.</p>
+      <a class="contacto" href="https://ig.me/m/magicmarmeid" target="_blank" rel="noopener">talk to the founder → DM</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="pie">
+    <span>LO System · White Paper v0.1</span>
+    <span>Marcela Ibarra · Bogotá · 2026</span>
+  </div>
+</footer>
+
+<script>
+  // ---------- La obra como fondo de agua viva ----------
+  (function(){
+    const canvas = document.getElementById('fondo');
+    const ctx = canvas.getContext('2d');
+    const reduceM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const img = new Image();
+    img.src = 'ibanni.jpg';
+
+    let W, H, sim, sctx, src, out, cur, prev, s, d, corriendo = false;
+
+    function pintarBase(){
+      const ca = W / H, ia = img.width / img.height;
+      let sw, sh, sx, sy;
+      if (ia > ca){ sh = img.height; sw = sh * ca; sx = (img.width - sw) / 2; sy = 0; }
+      else { sw = img.width; sh = sw / ca; sx = 0; sy = (img.height - sh) / 2; }
+      sctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+      const gv = sctx.createLinearGradient(0, 0, 0, H);
+      gv.addColorStop(0, 'rgba(16,10,22,.52)');
+      gv.addColorStop(.5, 'rgba(16,10,22,.38)');
+      gv.addColorStop(1, 'rgba(16,10,22,.58)');
+      sctx.fillStyle = gv; sctx.fillRect(0, 0, W, H);
+    }
+
+    function construir(){
+      const aspecto = innerHeight / innerWidth;
+      W = 288;
+      H = Math.max(160, Math.min(560, Math.round(W * aspecto)));
+      sim = document.createElement('canvas');
+      sim.width = W; sim.height = H;
+      sctx = sim.getContext('2d');
+      pintarBase();
+      canvas.width = innerWidth; canvas.height = innerHeight;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
+      if (reduceM) return;
+      src = sctx.getImageData(0, 0, W, H);
+      out = sctx.createImageData(W, H);
+      out.data.set(src.data);
+      cur = new Int16Array(W * H);
+      prev = new Int16Array(W * H);
+      s = src.data; d = out.data;
+      if (!corriendo){ corriendo = true; requestAnimationFrame(frame); }
+    }
+
+    function drop(x, y, f){
+      if (!prev) return;
+      x |= 0; y |= 0;
+      if (x < 2 || y < 2 || x > W - 3 || y > H - 3) return;
+      prev[y * W + x] = f;
+    }
+
+    img.onload = function(){
+      construir();
+      let espera;
+      window.addEventListener('resize', function(){
+        clearTimeout(espera); espera = setTimeout(construir, 200);
+      });
+      window.addEventListener('pointermove', function(e){
+        drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 460);
+      });
+      window.addEventListener('pointerdown', function(e){
+        drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 820);
+      });
+      setInterval(function(){
+        drop(12 + Math.random() * (W - 24), 12 + Math.random() * (H - 24), 320);
+      }, 2800);
+    };
+
+    function frame(){
+      for (let y = 1; y < H - 1; y++){
+        const row = y * W;
+        for (let x = 1; x < W - 1; x++){
+          const i = row + x;
+          let v = ((prev[i-1] + prev[i+1] + prev[i-W] + prev[i+W]) >> 1) - cur[i];
+          v -= v >> 5;
+          cur[i] = v;
+        }
+      }
+      const t = prev; prev = cur; cur = t;
+      for (let y = 1; y < H - 1; y++){
+        for (let x = 1; x < W - 1; x++){
+          const i = y * W + x;
+          const dx = prev[i-1] - prev[i+1];
+          const dy = prev[i-W] - prev[i+W];
+          let sx = x + (dx >> 4), sy = y + (dy >> 4);
+          if (sx < 0) sx = 0; else if (sx >= W) sx = W - 1;
+          if (sy < 0) sy = 0; else if (sy >= H) sy = H - 1;
+          const si = (sy * W + sx) * 4, di = i * 4;
+          const brillo = dx >> 3;
+          d[di]   = s[si]   + brillo;
+          d[di+1] = s[si+1] + brillo;
+          d[di+2] = s[si+2] + brillo;
+          d[di+3] = 255;
+        }
+      }
+      sctx.putImageData(out, 0, 0);
+      ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
+      requestAnimationFrame(frame);
+    }
+  })();
+</script>
+
+</body>
+</html>
