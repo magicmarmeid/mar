@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marcela Ibarra</title>
+<meta name="description" content="Marcela Ibarra — pensadora, artista, mamá, humana. Una invitación a mi mundo: escritos, builds y artefactos.">
+<meta property="og:title" content="Marcela Ibarra">
+<meta property="og:description" content="Hola, soy Mar. Designing a better way to live.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="ibanni.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#241a2e;
+    --tinta-suave:#5c4f68;
+    --papel:#f1eef4;
+    --papel-hondo:#e7e2ec;
+    --violeta:#4b2e6f;
+    --oro:#a67c2e;
+    --linea:rgba(36,26,46,.16);
+    --max:1060px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--papel);
+    color:var(--tinta);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--violeta);color:var(--papel)}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--papel) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--linea);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .mono{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+    font-size:1.35rem;color:var(--tinta);text-decoration:none;letter-spacing:.02em;
+  }
+  .navlinks{display:flex;gap:26px}
+  .navlinks a{
+    font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--tinta-suave);text-decoration:none;transition:color .2s;
+  }
+  .navlinks a:hover,.navlinks a:focus-visible{color:var(--violeta)}
+  a:focus-visible{outline:2px solid var(--violeta);outline-offset:3px;border-radius:2px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:96px 0 90px;position:relative;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(60% 80% at 78% 8%, rgba(166,124,46,.08), transparent 70%);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;
+  }
+  .eyebrow{
+    font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:clamp(2.8rem, 6vw, 4.6rem);line-height:1.02;letter-spacing:-.01em;
+  }
+  h1 em{font-style:italic;color:var(--violeta)}
+  .identidades{
+    margin-top:18px;
+    font-family:'Archivo',sans-serif;font-size:.74rem;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--tinta-suave);
+  }
+  .hero p.presenta{
+    max-width:32em;margin-top:24px;font-size:1.1rem;color:var(--tinta-suave);
+    font-weight:300;
+  }
+  .epigrafe{
+    margin-top:26px;padding-left:18px;border-left:2px solid var(--oro);
+    font-style:italic;font-weight:300;color:var(--tinta-suave);font-size:1rem;
+    max-width:28em;
+  }
+  .epigrafe span{
+    display:block;margin-top:4px;font-family:'Archivo',sans-serif;font-style:normal;
+    font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .hero .puerta{
+    display:inline-block;margin-top:32px;
+    font-family:'Archivo',sans-serif;font-size:.75rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;
+    color:var(--tinta);text-decoration:none;
+    border-bottom:1px solid var(--oro);padding-bottom:6px;
+    transition:color .2s,border-color .2s;
+  }
+  .hero .puerta:hover{color:var(--violeta);border-color:var(--violeta)}
+
+  /* obra con agua */
+  .obra{
+    position:relative;border-radius:10px;overflow:hidden;
+    box-shadow:0 24px 60px -24px rgba(36,26,46,.45);
+    aspect-ratio:1/1;
+  }
+  .obra canvas,.obra img{display:block;width:100%;height:100%;object-fit:cover;touch-action:pan-y}
+  .obra figcaption{
+    position:absolute;left:0;right:0;bottom:0;padding:14px 18px;
+    font-family:'Archivo',sans-serif;font-size:.64rem;font-weight:500;
+    letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);
+    background:linear-gradient(transparent, rgba(20,12,26,.55));
+    pointer-events:none;
+  }
+
+  /* reveal */
+  .rise{opacity:0;transform:translateY(14px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+  .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.2s}.rise.d3{animation-delay:.34s}.rise.d4{animation-delay:.48s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .rise{opacity:1;transform:none;animation:none}
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:84px 0;border-top:1px solid var(--linea)}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:14px}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+    font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:.01em;
+  }
+  .sec-label{
+    font-family:'Archivo',sans-serif;font-size:.7rem;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--oro);white-space:nowrap;
+  }
+  .sec-intro{max-width:36em;color:var(--tinta-suave);font-weight:300;margin-bottom:44px}
+
+  /* ---------- lista ---------- */
+  .lista{display:grid;gap:0;border-top:1px solid var(--linea)}
+  .pieza{
+    display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:baseline;
+    padding:30px 6px;border-bottom:1px solid var(--linea);
+    text-decoration:none;color:inherit;transition:background .2s;
+  }
+  .pieza:hover,.pieza:focus-visible{background:var(--papel-hondo)}
+  .tipo{
+    font-family:'Archivo',sans-serif;font-size:.68rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-suave);
+  }
+  .pieza h3{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.5rem;line-height:1.15;
+  }
+  .pieza h3 span{font-style:italic;font-weight:500}
+  .pieza p{margin-top:8px;color:var(--tinta-suave);font-weight:300;font-size:1rem;max-width:38em}
+  .pieza p i{color:var(--violeta)}
+  .estado{
+    font-family:'Archivo',sans-serif;font-size:.66rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    padding:5px 12px;border:1px solid var(--linea);border-radius:999px;
+    color:var(--tinta-suave);white-space:nowrap;
+  }
+  .estado.vivo{border-color:var(--violeta);color:var(--violeta)}
+  .estado.oro{border-color:var(--oro);color:var(--oro)}
+  .pieza.abierta{cursor:default}
+  .pieza.abierta h3{color:var(--tinta-suave);font-weight:500;font-style:italic}
+
+  /* ---------- artifacts ---------- */
+  .artefacto{
+    border:1px solid var(--linea);border-radius:6px;padding:44px 40px;
+    background:linear-gradient(160deg, var(--papel-hondo), var(--papel) 60%);
+    position:relative;overflow:hidden;
+  }
+  .artefacto::after{
+    content:"01";position:absolute;right:26px;top:14px;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:5rem;color:rgba(75,46,111,.10);line-height:1;
+  }
+  .artefacto h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:2rem;font-style:italic}
+  .artefacto .firma{
+    font-family:'Archivo',sans-serif;font-size:.7rem;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:14px;
+  }
+  .artefacto p{margin-top:14px;color:var(--tinta-suave);font-weight:300;max-width:40em}
+  .artefacto .datos{
+    display:flex;gap:28px;margin-top:26px;flex-wrap:wrap;
+    font-family:'Archivo',sans-serif;font-size:.72rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--tinta-suave);
+  }
+  .datos b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.5rem;
+    font-weight:600;color:var(--tinta);letter-spacing:0;text-transform:none}
+  .proximo{
+    margin-top:18px;padding:26px 30px;border:1px dashed var(--linea);border-radius:6px;
+    color:var(--tinta-suave);font-style:italic;font-weight:300;
+  }
+
+  /* ---------- statement ---------- */
+  .statement{text-align:center;padding:110px 0}
+  .statement .sec-label{display:block;margin-bottom:30px}
+  .statement blockquote{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(1.8rem,4.5vw,3rem);line-height:1.25;color:var(--tinta);
+    max-width:22em;margin:0 auto;
+  }
+  .statement blockquote::before{content:"« ";color:var(--oro)}
+  .statement blockquote::after{content:" »";color:var(--oro)}
+  .statement .excava{
+    margin-top:30px;font-weight:300;color:var(--tinta-suave);font-size:1.15rem;
+    max-width:30em;margin-left:auto;margin-right:auto;
+  }
+  .statement .firma-mar{
+    margin-top:26px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.4rem;color:var(--violeta);
+  }
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--linea);padding:36px 0 48px}
+  .pie{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+    font-family:'Archivo',sans-serif;font-size:.72rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--tinta-suave)}
+  .pie a{color:var(--tinta-suave);text-decoration:none}
+  .pie a:hover{color:var(--violeta)}
+  #reloj{font-variant-numeric:tabular-nums}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .obra{max-width:440px}
+  }
+  @media (max-width:720px){
+    .pieza{grid-template-columns:1fr;gap:8px}
+    .estado{justify-self:start}
+    .navlinks{gap:16px}
+    .artefacto{padding:32px 24px}
+    section{padding:64px 0}
+    .hero{padding:72px 0 64px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="principal">
+      <a class="mono" href="#top">m/i</a>
+      <div class="navlinks">
+        <a href="#escritos">Escritos</a>
+        <a href="#build">Build</a>
+        <a href="#artifacts">Artifacts</a>
+        <a href="#statement">Statement</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow rise d1">designing a better way to live</p>
+        <h1 class="rise d2">Hola, soy Mar.<br><em>Bienvenida a mi mundo.</em></h1>
+        <p class="identidades rise d2">pensadora · artista · mamá · humana</p>
+        <p class="presenta rise d3">No quiero agotarme en una sola cosa — ni agotarme a mí.
+        Pienso, creo, escribo; soy mamá, esposa, yo misma, e intento hacerlo todo de la mejor
+        manera posible. Creo que las ciencias son nobles y útiles, pero el arte es la razón
+        por la que estamos vivos.</p>
+        <blockquote class="epigrafe rise d3">"You get what anybody gets — you get a lifetime."
+          <span>— Neil Gaiman, The Sandman</span>
+        </blockquote>
+        <a class="puerta rise d4" href="#escritos">Entrar ↓</a>
+      </div>
+
+      <figure class="obra rise d3" aria-label="Obra de Marcela: rostro bajo el agua dorada">
+        <canvas id="arte"></canvas>
+        <figcaption>obra propia · toca el agua</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- ESCRITOS -->
+  <section id="escritos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Escritos</h2>
+        <span class="sec-label">seleccionados</span>
+      </div>
+      <p class="sec-intro">Lo que escribo gira alrededor de una misma pregunta: qué recordamos,
+      qué callamos y qué estamos dispuestos a hacer con eso.</p>
+
+      <div class="lista">
+        <a class="pieza" href="#">
+          <span class="tipo">Novela</span>
+          <div>
+            <h3><span>Daghoas:</span> Una humana perdida</h3>
+            <p>Libro I de una trilogía. Lois recupera, capa por capa, la memoria de un mundo
+            llamado Mantho — y con ella, una pregunta sin respuesta cómoda: ¿es legítimo salvar
+            a alguien que no ha pedido ser salvado? <i>Abierto a beta readers: escríbeme al DM
+            si quieres leerlo antes que nadie.</i></p>
+          </div>
+          <span class="estado oro">beta readers</span>
+        </a>
+
+        <a class="pieza" href="#">
+          <span class="tipo">Ensayo</span>
+          <div>
+            <h3>No estamos lo suficientemente enojados</h3>
+            <p>Un ensayo político sobre la obediencia voluntaria, el umbral de la rabia colectiva
+            y por qué los pueblos callan más tiempo del que deberían. De La Boétie a Havel,
+            pasando por los Montes de María.</p>
+          </div>
+          <span class="estado">en curso</span>
+        </a>
+
+        <a class="pieza" href="#">
+          <span class="tipo">Poesía</span>
+          <div>
+            <h3><span>Balada</span> — de <span>Baladas después de Terán</span></h3>
+            <p>Un poema del ciclo de dieciséis baladas, firmado como Lois Naar. La versión completa
+            vive en el artefacto inmersivo, más abajo.</p>
+          </div>
+          <span class="estado">Lois Naar</span>
+        </a>
+
+        <a class="pieza" href="textos.html">
+          <span class="tipo">Textos varios</span>
+          <div>
+            <h3>El mundo <span>a través de mis ojos</span></h3>
+            <p>Ensayos y reseñas sueltas: los videojuegos como aliados de la infancia,
+            <span style="font-style:italic">Loving Vincent</span>, y lo que se vaya acumulando.
+            Flotan en su propia página — atrapa uno y léelo.</p>
+          </div>
+          <span class="estado">colección viva</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILD -->
+  <section id="build">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Build</h2>
+        <span class="sec-label">lo que construyo</span>
+      </div>
+      <p class="sec-intro">Sistemas reales, para gente real. Menos pitch, más producto funcionando.</p>
+
+      <div class="lista">
+        <a class="pieza" href="#">
+          <span class="tipo">Producto</span>
+          <div>
+            <h3>BIMU <span>&amp; Bimucito</span></h3>
+            <p>Seguridad social para trabajadores independientes en Colombia, con un agente de IA
+            que vive en WhatsApp y te acompaña como un amigo que sí sabe de trámites.</p>
+          </div>
+          <span class="estado vivo">vivo</span>
+        </a>
+
+        <a class="pieza" href="#">
+          <span class="tipo">Producto</span>
+          <div>
+            <h3>Tu álbum, <span>para imprimir</span></h3>
+            <p>Sube tus fotos, elige una paleta — Aubergine &amp; Sky, Coffee &amp; Butter, Noir,
+            Blanco — y recibe un PDF en formato Carta listo para llevar a tu litografía de barrio.</p>
+          </div>
+          <span class="estado oro">en camino</span>
+        </a>
+
+        <a class="pieza" href="#">
+          <span class="tipo">Sistema</span>
+          <div>
+            <h3>LO System</h3>
+            <p>Un sistema operativo ambiental de IA: dejas el teléfono en el dock al llegar
+            a casa y la inteligencia se muda al entorno — el oído como interfaz, el silencio
+            por defecto. La tecnología debería competir por menos de tu atención, no por más.</p>
+          </div>
+          <span class="estado">white paper</span>
+        </a>
+
+        <div class="pieza abierta">
+          <span class="tipo">Próximo</span>
+          <div>
+            <h3>Este espacio está reservado.</h3>
+            <p>Tengo una lista larga. Lo que salga de ahí, aparecerá aquí primero.</p>
+          </div>
+          <span class="estado">···</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTIFACTS -->
+  <section id="artifacts">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Artifacts</h2>
+        <span class="sec-label">arte + invención</span>
+      </div>
+      <p class="sec-intro">Objetos que no son del todo libro ni del todo app. Los llamo artefactos:
+      piezas para habitarse, no solo para verse.</p>
+
+      <div class="artefacto">
+        <p class="firma">Artefacto 01 · Lois Naar</p>
+        <h3>Baladas después de Terán</h3>
+        <p>Un poemario inmersivo: dieciséis baladas con ilustraciones originales, donde texto e
+        imagen conviven en un mismo scroll continuo. No se lee — se recorre.</p>
+        <div class="datos">
+          <div><b>16</b>baladas</div>
+          <div><b>336</b>versos</div>
+          <div><b>∞</b>scroll</div>
+        </div>
+      </div>
+
+      <div class="proximo">Más artefactos en el taller. Este es apenas el primero.</div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section id="statement" class="statement">
+    <div class="wrap">
+      <span class="sec-label">statement</span>
+      <blockquote>Lo maravilloso subyace, como si fuera lava, toda nuestra existencia.</blockquote>
+      <p class="excava">Estoy decidida a excavar en mí hasta encontrarlo — y a rebosar en él.
+      Solo tenemos este tiempo aquí, y quiero usar todo lo que he aprendido, y lo que me falta
+      por aprender, para vivir mejor.</p>
+      <p class="firma-mar">— Mar</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap pie">
+    <span>© 2026 Marcela Ibarra</span>
+    <a href="#" aria-label="Instagram">@instagram</a>
+    <span>Bogotá <span id="reloj">--:--:--</span></span>
+  </div>
+</footer>
+
+<script>
+  // ---- Reloj de Bogotá ----
+  function reloj(){
+    document.getElementById('reloj').textContent =
+      new Date().toLocaleTimeString('es-CO',{hour12:false,timeZone:'America/Bogota'});
+  }
+  reloj(); setInterval(reloj,1000);
+
+  // ---- Agua interactiva sobre la obra ----
+  (function(){
+    const canvas = document.getElementById('arte');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SIM = 320;                       // resolución de la simulación
+    const img = new Image();
+    img.src = 'ibanni.jpg';
+
+    img.onload = function(){
+      // canvas de simulación (oculto) + canvas visible
+      const sim = document.createElement('canvas');
+      sim.width = SIM; sim.height = SIM;
+      const sctx = sim.getContext('2d');
+      sctx.drawImage(img, 0, 0, SIM, SIM);
+
+      const ctx = canvas.getContext('2d');
+      function fit(){
+        const r = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(r.width * dpr);
+        canvas.height = Math.round(r.height * dpr);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
+      }
+      fit(); window.addEventListener('resize', fit);
+
+      if (reduce) return;                  // imagen quieta si se prefiere menos movimiento
+
+      const src = sctx.getImageData(0, 0, SIM, SIM);
+      const out = sctx.createImageData(SIM, SIM);
+      out.data.set(src.data);
+      let cur = new Int16Array(SIM * SIM);
+      let prev = new Int16Array(SIM * SIM);
+
+      function drop(x, y, fuerza){
+        x |= 0; y |= 0;
+        if (x < 2 || y < 2 || x > SIM - 3 || y > SIM - 3) return;
+        prev[y * SIM + x] = fuerza;
+      }
+
+      canvas.addEventListener('pointermove', function(e){
+        const r = canvas.getBoundingClientRect();
+        drop((e.clientX - r.left) / r.width * SIM,
+             (e.clientY - r.top) / r.height * SIM, 520);
+      });
+      canvas.addEventListener('pointerdown', function(e){
+        const r = canvas.getBoundingClientRect();
+        drop((e.clientX - r.left) / r.width * SIM,
+             (e.clientY - r.top) / r.height * SIM, 900);
+      });
+
+      // gotas ambientales: el agua respira sola
+      setInterval(function(){
+        drop(20 + Math.random() * (SIM - 40), 20 + Math.random() * (SIM - 40), 340);
+      }, 2800);
+
+      const s = src.data, d = out.data;
+      function frame(){
+        // física del agua (dos buffers)
+        for (let y = 1; y < SIM - 1; y++){
+          const row = y * SIM;
+          for (let x = 1; x < SIM - 1; x++){
+            const i = row + x;
+            let v = ((prev[i-1] + prev[i+1] + prev[i-SIM] + prev[i+SIM]) >> 1) - cur[i];
+            v -= v >> 5;                   // amortiguación
+            cur[i] = v;
+          }
+        }
+        const t = prev; prev = cur; cur = t;
+
+        // refracción + brillo
+        for (let y = 1; y < SIM - 1; y++){
+          for (let x = 1; x < SIM - 1; x++){
+            const i = y * SIM + x;
+            const dx = prev[i-1] - prev[i+1];
+            const dy = prev[i-SIM] - prev[i+SIM];
+            let sx = x + (dx >> 4), sy = y + (dy >> 4);
+            if (sx < 0) sx = 0; else if (sx >= SIM) sx = SIM - 1;
+            if (sy < 0) sy = 0; else if (sy >= SIM) sy = SIM - 1;
+            const si = (sy * SIM + sx) * 4, di = i * 4;
+            const brillo = dx >> 3;
+            d[di]   = s[si]   + brillo;
+            d[di+1] = s[si+1] + brillo;
+            d[di+2] = s[si+2] + brillo;
+            d[di+3] = 255;
+          }
+        }
+        sctx.putImageData(out, 0, 0);
+        ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    };
+  })();
+</script>
+
+</body>
+</html>
