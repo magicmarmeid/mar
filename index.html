@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Marcela Ibarra</title>
-<meta name="description" content="Hola, soy Mar :) — pensadora, artista, mamá, humana. Escritos, cosas que creo y artefactos.">
+<meta name="description" content="Hola, soy Mar :) Too human to be just one thing. Escritos, cosas que creo y artefactos.">
 <meta property="og:title" content="Marcela Ibarra">
-<meta property="og:description" content="Hola, soy Mar :) Escribo, construyo, invento — casi siempre las tres en la misma semana.">
+<meta property="og:description" content="Hola, soy Mar :) Too human to be just one thing.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="ibanni.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,15 +14,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --claro:#f5f0e8;                       /* texto principal */
-    --claro-suave:rgba(245,240,232,.75);   /* texto secundario */
-    --oro:#d9b36a;                         /* dorado del agua */
-    --lila:#cdb7ec;                        /* violeta claro */
-    --vidrio:rgba(20,12,26,.55);           /* paneles translúcidos */
+    --claro:#f5f0e8;
+    --claro-suave:rgba(245,240,232,.78);
+    --oro:#d9b36a;
+    --lila:#cdb7ec;
+    --vidrio:rgba(20,12,26,.55);
     --vidrio-hover:rgba(255,255,255,.07);
     --borde:rgba(255,255,255,.16);
     --linea:rgba(255,255,255,.22);
-    --noche:#171020;                       /* fallback bajo la imagen */
+    --noche:#171020;
     --max:1060px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -37,8 +37,36 @@
   }
   ::selection{background:var(--oro);color:#241a2e}
 
-  /* ---------- la obra es el fondo: agua viva ---------- */
-  #fondo{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+  /* ---------- fondo: la obra nítida a la derecha, agua ambiental a la izquierda ---------- */
+  #fondoBase{
+    position:fixed;inset:0;z-index:-2;
+    background:linear-gradient(to bottom, #232a24, #4a4230 50%, #21180f); /* fallback; JS lo afina con colores de la obra */
+  }
+  #fondoBase::before{
+    content:"";position:absolute;inset:0;
+    background-image:url('ibanni.jpg');
+    background-repeat:no-repeat;
+    background-position:right center;
+    background-size:auto 100%;
+    -webkit-mask-image:linear-gradient(to left, black 60%, transparent 97%);
+    mask-image:linear-gradient(to left, black 60%, transparent 97%);
+  }
+  #fondoBase::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(rgba(16,10,22,.5), rgba(16,10,22,.34) 50%, rgba(16,10,22,.58));
+  }
+  @media (orientation: portrait){
+    #fondoBase::before{
+      background-position:center;
+      background-size:cover;
+      -webkit-mask-image:none;mask-image:none;
+    }
+  }
+  /* destellos de agua que responden al cursor, sin tocar la nitidez de la obra */
+  #agua{
+    position:fixed;inset:0;width:100%;height:100%;z-index:-1;
+    pointer-events:none;mix-blend-mode:overlay;
+  }
 
   .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
 
@@ -50,30 +78,38 @@
     border-radius:14px;
   }
 
-  /* ---------- nav ---------- */
+  /* ---------- nav con las pestañas arriba ---------- */
   header{
     position:sticky;top:0;z-index:20;
-    background:rgba(18,11,24,.5);
+    background:rgba(18,11,24,.55);
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--borde);
   }
-  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
   .mono{
     font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
     font-size:1.35rem;color:var(--claro);text-decoration:none;letter-spacing:.02em;
   }
-  .navlinks{display:flex;gap:26px}
-  .navlinks a{
-    font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:500;
-    letter-spacing:.14em;text-transform:uppercase;
-    color:var(--claro-suave);text-decoration:none;transition:color .2s;cursor:pointer;
+  .tabs{
+    display:flex;gap:4px;align-items:center;
+    overflow-x:auto;scrollbar-width:none;
   }
-  .navlinks a:hover,.navlinks a:focus-visible{color:var(--oro)}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+    background:none;border:none;cursor:pointer;color:var(--claro-suave);
+    padding:9px 14px;border-radius:999px;transition:color .2s, background .2s;
+  }
+  .tab .n{color:var(--oro);margin-right:5px;font-weight:500}
+  .tab:hover{color:var(--claro)}
+  .tab.activa{background:var(--claro);color:#241a2e}
+  .tab.activa .n{color:#8a6420}
   a:focus-visible,button:focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:2px}
 
   /* ---------- hero ---------- */
-  .hero{padding:88px 0 56px}
+  .hero{padding:88px 0 64px}
   .hero-panel{padding:52px 56px;max-width:640px}
   .eyebrow{
     font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:600;
@@ -88,15 +124,19 @@
   h1 em{font-style:italic;color:var(--oro)}
   .identidades{
     margin-top:18px;
-    font-family:'Archivo',sans-serif;font-size:.74rem;font-weight:500;
-    letter-spacing:.22em;text-transform:uppercase;color:var(--claro-suave);
+    font-family:'Archivo',sans-serif;font-size:.76rem;font-weight:500;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--claro-suave);
   }
   .hero p.presenta{
-    max-width:30em;margin-top:24px;font-size:1.08rem;color:var(--claro-suave);
+    max-width:31em;margin-top:24px;font-size:1.08rem;color:var(--claro-suave);
     font-weight:300;
   }
+  .hero p.lava{
+    max-width:30em;margin-top:20px;font-size:1.05rem;font-weight:300;
+    font-style:italic;color:var(--oro);
+  }
   .epigrafe{
-    margin-top:26px;padding-left:18px;border-left:2px solid var(--oro);
+    margin-top:24px;padding-left:18px;border-left:2px solid var(--oro);
     font-style:italic;font-weight:300;color:var(--claro-suave);font-size:1rem;
     max-width:28em;
   }
@@ -113,9 +153,6 @@
     transition:color .2s,border-color .2s;
   }
   .puerta:hover{color:var(--oro)}
-  .obra-nota{
-    margin-top:22px;font-style:italic;font-weight:300;font-size:.88rem;color:var(--oro);
-  }
 
   .rise{opacity:0;transform:translateY(14px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
   .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.2s}.rise.d3{animation-delay:.34s}.rise.d4{animation-delay:.48s}
@@ -125,25 +162,9 @@
     .rise{opacity:1;transform:none;animation:none}
   }
 
-  /* ---------- tabs ---------- */
-  .tabs-zona{max-width:var(--max);margin:0 auto;padding:0 28px}
-  .tabs{
-    display:flex;gap:8px;flex-wrap:wrap;
-    padding:12px 14px;
-  }
-  .tab{
-    font-family:'Archivo',sans-serif;font-size:.74rem;font-weight:600;
-    letter-spacing:.16em;text-transform:uppercase;
-    background:none;border:none;cursor:pointer;color:var(--claro-suave);
-    padding:10px 16px;border-radius:999px;transition:color .2s, background .2s;
-  }
-  .tab .n{color:var(--oro);margin-right:6px;font-weight:500}
-  .tab:hover{color:var(--claro)}
-  .tab.activa{background:var(--claro);color:#241a2e}
-  .tab.activa .n{color:#8a6420}
-
   /* ---------- panels ---------- */
-  .panel{display:none;padding:36px 0 84px}
+  #paneles{scroll-margin-top:80px}
+  .panel{display:none;padding:16px 0 84px}
   .panel.activa{display:block;animation:aparece .45s cubic-bezier(.2,.7,.2,1)}
   @keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   @media (prefers-reduced-motion: reduce){.panel.activa{animation:none}}
@@ -164,8 +185,8 @@
 
   /* ---------- cuadros ---------- */
   .cuadros{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px}
-  .cuadro{border-top:1px solid var(--linea);padding-top:20px;border-radius:0 0 10px 10px;
-    transition:background .25s;padding-left:6px;padding-right:6px;padding-bottom:10px}
+  .cuadro{border-top:1px solid var(--linea);padding:20px 6px 10px;border-radius:0 0 10px 10px;
+    transition:background .25s}
   .cuadro:hover{background:var(--vidrio-hover)}
   .cuadro .num{
     font-family:'Archivo',sans-serif;font-size:.68rem;font-weight:600;
@@ -238,24 +259,6 @@
     color:var(--claro-suave);font-style:italic;font-weight:300;
   }
 
-  /* ---------- yo / statement ---------- */
-  .statement{text-align:center}
-  .statement blockquote{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
-    font-size:clamp(1.8rem,4.5vw,2.9rem);line-height:1.25;color:var(--claro);
-    max-width:22em;margin:28px auto 0;
-  }
-  .statement blockquote::before{content:"« ";color:var(--oro)}
-  .statement blockquote::after{content:" »";color:var(--oro)}
-  .statement .excava{
-    margin-top:30px;font-weight:300;color:var(--claro-suave);font-size:1.12rem;
-    max-width:30em;margin-left:auto;margin-right:auto;
-  }
-  .statement .firma-mar{
-    margin-top:26px;font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:1.4rem;color:var(--oro);
-  }
-
   /* ---------- footer ---------- */
   footer{border-top:1px solid var(--borde);background:rgba(18,11,24,.5);
     backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
@@ -269,30 +272,30 @@
 
   /* ---------- responsive ---------- */
   @media (max-width:720px){
-    .navlinks{display:none}
-    .hero{padding:56px 0 40px}
+    nav{height:auto;padding:10px 0;flex-wrap:wrap}
+    .hero{padding:56px 0 44px}
     .hero-panel{padding:36px 28px}
     .panel-caja{padding:36px 26px}
-    .tabs{gap:4px;padding:10px}
-    .tab{padding:8px 12px;font-size:.68rem}
-    .panel{padding:28px 0 56px}
+    .tab{padding:8px 10px;font-size:.66rem}
+    .panel{padding:10px 0 56px}
     .artefacto{padding:32px 24px}
   }
 </style>
 </head>
 <body>
 
-<canvas id="fondo" aria-label="Fondo: obra propia de Marcela, un rostro bajo agua dorada"></canvas>
+<div id="fondoBase" aria-label="Fondo: obra propia de Marcela, un rostro bajo agua dorada"></div>
+<canvas id="agua" aria-hidden="true"></canvas>
 
 <header>
   <div class="wrap">
     <nav aria-label="principal">
       <a class="mono" href="#top">m/i</a>
-      <div class="navlinks">
-        <a data-tab="escritos">Escritos</a>
-        <a data-tab="creando">Creando</a>
-        <a data-tab="artifacts">Artifacts</a>
-        <a data-tab="yo">Yo</a>
+      <div class="tabs" role="tablist" aria-label="secciones">
+        <button class="tab activa" data-tab="escritos" role="tab"><span class="n">01</span>escritos</button>
+        <button class="tab" data-tab="creando" role="tab"><span class="n">02</span>creando</button>
+        <button class="tab" data-tab="artifacts" role="tab"><span class="n">03</span>artifacts</button>
+        <button class="tab" data-top="1" role="tab"><span class="n">04</span>yo</button>
       </div>
     </nav>
   </div>
@@ -306,29 +309,23 @@
       <div class="hero-panel vidrio rise d1">
         <p class="eyebrow rise d1">designing a better way to live</p>
         <h1 class="rise d2">Hola, soy Mar <em>:)</em></h1>
-        <p class="identidades rise d2">pensadora · artista · mamá · humana</p>
-        <p class="presenta rise d3">fundadora y escritora. historia del arte y filosofía de
-        formación. escribo, construyo, invento — casi siempre las tres en la misma semana.</p>
+        <p class="identidades rise d2">too human to be just one thing</p>
+        <p class="presenta rise d3">historiadora del arte de profesión, empresaria por obligación,
+        mamá por amor. escribo, creo cosas, viajo, intento ganar dinero — usualmente todo al
+        mismo tiempo, mientras trato de ser la mejor humana que puedo ser.</p>
+        <p class="lava rise d3">Fiel creyente de que lo maravilloso subyace, como si fuera lava,
+        toda nuestra existencia.</p>
         <blockquote class="epigrafe rise d3">"You get what anybody gets — you get a lifetime."
           <span>— Neil Gaiman, The Sandman</span>
         </blockquote>
         <button class="puerta rise d4" data-tab="escritos" data-scroll="1">Entrar ↓</button>
-        <p class="obra-nota rise d4">el fondo es obra mía — muévete sobre él: es agua.</p>
       </div>
     </div>
   </div>
 
-  <!-- TABS -->
-  <div class="tabs-zona" id="tabs">
-    <div class="tabs vidrio" role="tablist" aria-label="secciones">
-      <button class="tab activa" data-tab="escritos" role="tab"><span class="n">01</span>escritos</button>
-      <button class="tab" data-tab="creando" role="tab"><span class="n">02</span>creando</button>
-      <button class="tab" data-tab="artifacts" role="tab"><span class="n">03</span>artifacts</button>
-      <button class="tab" data-tab="yo" role="tab"><span class="n">04</span>yo</button>
-    </div>
-  </div>
+  <!-- PANELES -->
+  <div id="paneles"></div>
 
-  <!-- PANEL: ESCRITOS -->
   <section class="panel activa" id="escritos" role="tabpanel">
     <div class="wrap">
       <div class="panel-caja vidrio">
@@ -385,7 +382,6 @@
     </div>
   </section>
 
-  <!-- PANEL: CREANDO -->
   <section class="panel" id="creando" role="tabpanel">
     <div class="wrap">
       <div class="panel-caja vidrio">
@@ -394,8 +390,8 @@
           <span class="sec-label">lo que construyo</span>
         </div>
         <p class="sec-intro">Tengo la molesta necesidad de construir sistemas, aprender cualquier
-        cosa e intentar mil proyectos — solo tenemos esta vida para intentarlo. Y por lo general
-        me suele salir bien.</p>
+        cosa e intentar mil proyectos al mismo tiempo. Y por lo general me suele salir bien &lt;3
+        Solo tenemos esta vida para crear...</p>
 
         <div class="cuadros">
           <article class="cuadro">
@@ -443,7 +439,6 @@
     </div>
   </section>
 
-  <!-- PANEL: ARTIFACTS -->
   <section class="panel" id="artifacts" role="tabpanel">
     <div class="wrap">
       <div class="panel-caja vidrio">
@@ -454,7 +449,7 @@
         <p class="sec-intro">Lo que se me ocurre con lo que encuentre &lt;3</p>
 
         <div class="artefacto">
-          <p class="firma">Artefacto 01 · Lois Naar</p>
+          <p class="firma">Artefacto 01</p>
           <h3>Baladas después de Terán</h3>
           <p>Un poemario inmersivo: dieciséis poemas con ilustraciones propias, donde texto e
           imagen conviven en un mismo scroll continuo. No se lee — se recorre.</p>
@@ -467,20 +462,6 @@
         </div>
 
         <div class="proximo">Más artefactos en el taller. Este es apenas el primero.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PANEL: YO -->
-  <section class="panel" id="yo" role="tabpanel">
-    <div class="wrap">
-      <div class="panel-caja vidrio statement">
-        <span class="sec-label">yo</span>
-        <blockquote>Lo maravilloso subyace, como si fuera lava, toda nuestra existencia.</blockquote>
-        <p class="excava">Estoy decidida a excavar en mí hasta encontrarlo — y a rebosar en él.
-        Solo tenemos este tiempo aquí, y quiero usar todo lo que he aprendido, y lo que me falta
-        por aprender, para vivir mejor.</p>
-        <p class="firma-mar">— Mar</p>
       </div>
     </div>
   </section>
@@ -503,48 +484,60 @@
   }
   reloj(); setInterval(reloj,1000);
 
-  // ---- Tabs ----
+  // ---- Tabs (en el header) ----
   const paneles = document.querySelectorAll('.panel');
-  const tabs = document.querySelectorAll('.tab');
+  const tabs = document.querySelectorAll('.tab[data-tab]');
   function activar(nombre, scroll){
     const destino = document.getElementById(nombre);
     if (!destino) return;
     paneles.forEach(p => p.classList.toggle('activa', p.id === nombre));
     tabs.forEach(t => t.classList.toggle('activa', t.dataset.tab === nombre));
-    if (scroll) document.getElementById('tabs').scrollIntoView({behavior:'smooth'});
+    if (scroll) document.getElementById('paneles').scrollIntoView({behavior:'smooth'});
   }
   document.querySelectorAll('[data-tab]').forEach(el => {
     el.addEventListener('click', e => {
       e.preventDefault();
-      activar(el.dataset.tab, el.dataset.scroll === '1' || el.closest('header'));
+      activar(el.dataset.tab, true);
     });
+  });
+  // "04 yo" vuelve al Hola, soy Mar
+  document.querySelectorAll('[data-top]').forEach(el => {
+    el.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
   });
   if (location.hash) activar(location.hash.slice(1), false);
 
-  // ---- La obra como fondo de agua viva ----
+  // ---- El lado izquierdo continúa los colores de la obra ----
+  const img = new Image();
+  img.src = 'ibanni.jpg';
+  img.onload = function(){
+    try{
+      const c = document.createElement('canvas');
+      c.width = 24; c.height = 96;
+      const x = c.getContext('2d');
+      x.drawImage(img, 0, 0, img.width * .16, img.height, 0, 0, 24, 96);
+      const dat = x.getImageData(0, 0, 24, 96).data;
+      function prom(y0, y1){
+        let r = 0, g = 0, b = 0, n = 0;
+        for (let y = y0; y < y1; y++) for (let i = 0; i < 24; i++){
+          const k = (y * 24 + i) * 4;
+          r += dat[k]; g += dat[k+1]; b += dat[k+2]; n++;
+        }
+        r = (r / n * .72) | 0; g = (g / n * .72) | 0; b = (b / n * .72) | 0;
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+      }
+      document.getElementById('fondoBase').style.background =
+        'linear-gradient(to bottom, ' + prom(0,32) + ', ' + prom(32,64) + ' 50%, ' + prom(64,96) + ')';
+    }catch(e){/* si falla, queda el degradado de respaldo */}
+  };
+
+  // ---- Destellos de agua sobre la obra (nitidez intacta) ----
   (function(){
-    const canvas = document.getElementById('fondo');
+    const canvas = document.getElementById('agua');
     const ctx = canvas.getContext('2d');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const img = new Image();
-    img.src = 'ibanni.jpg';
+    if (reduce) return;
 
-    let W, H, sim, sctx, src, out, cur, prev, s, d, corriendo = false;
-
-    function pintarBase(){
-      // recorte tipo "cover" para que el rostro no se deforme
-      const ca = W / H, ia = img.width / img.height;
-      let sw, sh, sx, sy;
-      if (ia > ca){ sh = img.height; sw = sh * ca; sx = (img.width - sw) / 2; sy = 0; }
-      else { sw = img.width; sh = sw / ca; sx = 0; sy = (img.height - sh) / 2; }
-      sctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
-      // velo oscuro para que el texto respire encima
-      const gv = sctx.createLinearGradient(0, 0, 0, H);
-      gv.addColorStop(0, 'rgba(16,10,22,.52)');
-      gv.addColorStop(.5, 'rgba(16,10,22,.38)');
-      gv.addColorStop(1, 'rgba(16,10,22,.58)');
-      sctx.fillStyle = gv; sctx.fillRect(0, 0, W, H);
-    }
+    let W, H, sim, sctx, out, cur, prev, d, corriendo = false;
 
     function construir(){
       const aspecto = innerHeight / innerWidth;
@@ -553,20 +546,20 @@
       sim = document.createElement('canvas');
       sim.width = W; sim.height = H;
       sctx = sim.getContext('2d');
-      pintarBase();
+      out = sctx.createImageData(W, H);
+      cur = new Int16Array(W * H);
+      prev = new Int16Array(W * H);
+      d = out.data;
       canvas.width = innerWidth; canvas.height = innerHeight;
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
-      if (reduce) return;
-      src = sctx.getImageData(0, 0, W, H);
-      out = sctx.createImageData(W, H);
-      out.data.set(src.data);
-      cur = new Int16Array(W * H);
-      prev = new Int16Array(W * H);
-      s = src.data; d = out.data;
       if (!corriendo){ corriendo = true; requestAnimationFrame(frame); }
     }
+    construir();
+    let espera;
+    window.addEventListener('resize', function(){
+      clearTimeout(espera); espera = setTimeout(construir, 200);
+    });
 
     function drop(x, y, f){
       if (!prev) return;
@@ -574,23 +567,15 @@
       if (x < 2 || y < 2 || x > W - 3 || y > H - 3) return;
       prev[y * W + x] = f;
     }
-
-    img.onload = function(){
-      construir();
-      let espera;
-      window.addEventListener('resize', function(){
-        clearTimeout(espera); espera = setTimeout(construir, 200);
-      });
-      window.addEventListener('pointermove', function(e){
-        drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 460);
-      });
-      window.addEventListener('pointerdown', function(e){
-        drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 820);
-      });
-      setInterval(function(){
-        drop(12 + Math.random() * (W - 24), 12 + Math.random() * (H - 24), 320);
-      }, 2800);
-    };
+    window.addEventListener('pointermove', function(e){
+      drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 520);
+    });
+    window.addEventListener('pointerdown', function(e){
+      drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 900);
+    });
+    setInterval(function(){
+      drop(12 + Math.random() * (W - 24), 12 + Math.random() * (H - 24), 360);
+    }, 2800);
 
     function frame(){
       for (let y = 1; y < H - 1; y++){
@@ -607,19 +592,16 @@
         for (let x = 1; x < W - 1; x++){
           const i = y * W + x;
           const dx = prev[i-1] - prev[i+1];
-          const dy = prev[i-W] - prev[i+W];
-          let sx = x + (dx >> 4), sy = y + (dy >> 4);
-          if (sx < 0) sx = 0; else if (sx >= W) sx = W - 1;
-          if (sy < 0) sy = 0; else if (sy >= H) sy = H - 1;
-          const si = (sy * W + sx) * 4, di = i * 4;
-          const brillo = dx >> 3;
-          d[di]   = s[si]   + brillo;
-          d[di+1] = s[si+1] + brillo;
-          d[di+2] = s[si+2] + brillo;
-          d[di+3] = 255;
+          const di = i * 4;
+          let a = dx < 0 ? -dx : dx;
+          a = a > 210 ? 210 : a;
+          if (dx > 0){ d[di] = 255; d[di+1] = 242; d[di+2] = 214; }
+          else { d[di] = 16; d[di+1] = 10; d[di+2] = 26; }
+          d[di+3] = a;
         }
       }
       sctx.putImageData(out, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
       requestAnimationFrame(frame);
     }
