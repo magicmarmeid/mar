@@ -34,12 +34,10 @@
   }
   #fondoBase::before{
     content:"";position:absolute;inset:0;
-    background-image:url('ibanni.jpg');
+    background-image:url('ibanni-pano.jpg');
     background-repeat:no-repeat;
     background-position:right center;
-    background-size:auto 100%;
-    -webkit-mask-image:linear-gradient(to left, black 60%, transparent 97%);
-    mask-image:linear-gradient(to left, black 60%, transparent 97%);
+    background-size:cover;
   }
   #fondoBase::after{
     content:"";position:absolute;inset:0;
@@ -47,8 +45,7 @@
   }
   @media (orientation: portrait){
     #fondoBase::before{
-      background-position:center;background-size:cover;
-      -webkit-mask-image:none;mask-image:none;
+      background-position:72% center;
     }
   }
   #agua{
@@ -268,29 +265,6 @@
 </footer>
 
 <script>
-  // ---------- El lado izquierdo continúa los colores de la obra ----------
-  const img = new Image();
-  img.src = 'ibanni.jpg';
-  img.onload = function(){
-    try{
-      const c = document.createElement('canvas');
-      c.width = 24; c.height = 96;
-      const x = c.getContext('2d');
-      x.drawImage(img, 0, 0, img.width * .16, img.height, 0, 0, 24, 96);
-      const dat = x.getImageData(0, 0, 24, 96).data;
-      function prom(y0, y1){
-        let r = 0, g = 0, b = 0, n = 0;
-        for (let y = y0; y < y1; y++) for (let i = 0; i < 24; i++){
-          const k = (y * 24 + i) * 4;
-          r += dat[k]; g += dat[k+1]; b += dat[k+2]; n++;
-        }
-        r = (r / n * .72) | 0; g = (g / n * .72) | 0; b = (b / n * .72) | 0;
-        return 'rgb(' + r + ',' + g + ',' + b + ')';
-      }
-      document.getElementById('fondoBase').style.background =
-        'linear-gradient(to bottom, ' + prom(0,32) + ', ' + prom(32,64) + ' 50%, ' + prom(64,96) + ')';
-    }catch(e){}
-  };
 
   // ---------- Destellos de agua ----------
   (function(){

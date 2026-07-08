@@ -8,7 +8,7 @@
 <meta property="og:title" content="Marcela Ibarra">
 <meta property="og:description" content="Hola, soy Mar :) Too human to be just one thing.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="ibanni.jpg">
+<meta property="og:image" content="ibanni-pano.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
@@ -44,12 +44,10 @@
   }
   #fondoBase::before{
     content:"";position:absolute;inset:0;
-    background-image:url('ibanni.jpg');
+    background-image:url('ibanni-pano.jpg');
     background-repeat:no-repeat;
     background-position:right center;
-    background-size:auto 100%;
-    -webkit-mask-image:linear-gradient(to left, black 60%, transparent 97%);
-    mask-image:linear-gradient(to left, black 60%, transparent 97%);
+    background-size:cover;
   }
   #fondoBase::after{
     content:"";position:absolute;inset:0;
@@ -57,9 +55,7 @@
   }
   @media (orientation: portrait){
     #fondoBase::before{
-      background-position:center;
-      background-size:cover;
-      -webkit-mask-image:none;mask-image:none;
+      background-position:72% center;
     }
   }
   /* destellos de agua que responden al cursor, sin tocar la nitidez de la obra */
@@ -506,29 +502,6 @@
   });
   if (location.hash) activar(location.hash.slice(1), false);
 
-  // ---- El lado izquierdo continúa los colores de la obra ----
-  const img = new Image();
-  img.src = 'ibanni.jpg';
-  img.onload = function(){
-    try{
-      const c = document.createElement('canvas');
-      c.width = 24; c.height = 96;
-      const x = c.getContext('2d');
-      x.drawImage(img, 0, 0, img.width * .16, img.height, 0, 0, 24, 96);
-      const dat = x.getImageData(0, 0, 24, 96).data;
-      function prom(y0, y1){
-        let r = 0, g = 0, b = 0, n = 0;
-        for (let y = y0; y < y1; y++) for (let i = 0; i < 24; i++){
-          const k = (y * 24 + i) * 4;
-          r += dat[k]; g += dat[k+1]; b += dat[k+2]; n++;
-        }
-        r = (r / n * .72) | 0; g = (g / n * .72) | 0; b = (b / n * .72) | 0;
-        return 'rgb(' + r + ',' + g + ',' + b + ')';
-      }
-      document.getElementById('fondoBase').style.background =
-        'linear-gradient(to bottom, ' + prom(0,32) + ', ' + prom(32,64) + ' 50%, ' + prom(64,96) + ')';
-    }catch(e){/* si falla, queda el degradado de respaldo */}
-  };
 
   // ---- Destellos de agua sobre la obra (nitidez intacta) ----
   (function(){
