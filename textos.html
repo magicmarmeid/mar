@@ -186,6 +186,14 @@
     .flota:nth-child(odd){align-self:flex-start}
     .flota:nth-child(even){align-self:flex-end}
     .flota:active{border-color:var(--oro)}
+    /* charca: pocos textos → flotan libres dentro de la pantalla, sin scroll */
+    #estanque.charca{display:block;padding:0;overflow:visible;height:var(--alto,70svh)}
+    .charca .flota{position:absolute;left:0;top:0;width:min(46vw,210px);padding:14px 15px 12px;
+      animation:none;border-radius:11px}
+    .charca .flota p{display:none}
+    .charca .flota .tipo{font-size:.56rem;letter-spacing:.16em}
+    .charca .flota h2{font-size:1.14rem;margin-top:5px}
+    .charca .flota .leer{margin-top:9px;font-size:.56rem}
     @keyframes mecer{
       0%  {transform:translate(0,0) rotate(var(--g1,-.8deg))}
       35% {transform:translate(var(--dx,10px),-9px) rotate(.3deg)}
@@ -194,7 +202,9 @@
     }
     .flota h2{font-size:1.3rem}
     .flota p{font-size:.88rem}
-    .intro{padding:44px 22px 4px}
+    .intro{padding:30px 22px 4px}
+    .intro h1{font-size:1.75rem;line-height:1.15;margin-top:8px}
+    .intro p{margin-top:8px}
     .intro p{font-size:.94rem}
     .pie{font-size:.62rem}
   }
@@ -404,8 +414,65 @@ Los invito a ver a quienes no suelen ver, los invito a dar lo máximo. Solo exis
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarLector(); });
 
-  // celular: a cada fragmento su propio vaivén
-  if (movil && !reduce){
+  // celular con pocos textos: charca sin scroll, flotan libres
+  if (movil){
+    const guia = document.querySelector('.intro p');
+    if (guia) guia.textContent = 'Cositas varias flotando a su ritmo. Atrapa una con el dedo y ábrela.';
+  }
+  let charca = movil && TEXTOS.length <= 8;
+  if (charca){
+    // ¿caben todos en la pantalla sin encimarse? si no, columna con scroll
+    estanque.classList.add('charca');
+    const libre = innerHeight - (estanque.getBoundingClientRect().top + scrollY) - 14;
+    const altoTarjeta = Math.max(...nodos.map(el => el.offsetHeight));
+    if (libre / nodos.length < altoTarjeta * .92){ estanque.classList.remove('charca'); charca = false; }
+  }
+  if (charca){
+    let celdas = [];
+    function medir(){
+      const arriba = estanque.getBoundingClientRect().top + scrollY;
+      const alto = innerHeight - arriba - 14;
+      estanque.style.setProperty('--alto', alto + 'px');
+      const W = estanque.clientWidth, n = nodos.length, M = 14;
+      const banda = alto / n;
+      celdas = nodos.map((el, i) => {
+        const w = el.offsetWidth, h = el.offsetHeight;
+        // zigzag: cada fragmento en su franja, alternando lados, sin tocar los bordes
+        const izq = M + 6, der = W - w - M - 6, centro = (W - w) / 2;
+        const bx = i % 2 ? der - (der - centro) * .25 * Math.random() : izq + (centro - izq) * .25 * Math.random();
+        const by = Math.min(alto - h - 6, Math.max(6, i * banda + (banda - h) / 2));
+        return { el, w, h, bx, by,
+          ax: Math.max(4, Math.min(18, bx - M, W - w - M - bx)),
+          ay: Math.max(6, Math.min(18, (banda - h) / 2 + 10)),
+          vx: .00022 + Math.random() * .00012, vy: .00017 + Math.random() * .00012,
+          f: Math.random() * Math.PI * 2, quieto: false, hasta: 0 };
+      });
+      if (reduce) celdas.forEach(c => c.el.style.transform = `translate(${c.bx}px,${c.by}px)`);
+    }
+    medir();
+    addEventListener('resize', medir);
+    // al tocarla, se queda quieta un momento para poder atraparla
+    nodos.forEach((el, i) => el.addEventListener('touchstart', () => {
+      const c = celdas[i]; if (c){ c.quieto = true; c.hasta = performance.now() + 1600; }
+    }, {passive:true}));
+    if (!reduce){
+      (function nadar(t){
+        for (const c of celdas){
+          if (c.quieto && t > c.hasta) c.quieto = false;
+          if (!c.quieto){
+            const x = c.bx + Math.sin(t * c.vx + c.f) * c.ax;
+            const y = c.by + Math.sin(t * c.vy + c.f * 1.7) * c.ay;
+            const g = Math.sin(t * c.vx * .8 + c.f) * .9;
+            c.el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${g.toFixed(2)}deg)`;
+          }
+        }
+        requestAnimationFrame(nadar);
+      })(0);
+    }
+  }
+
+  // celular con muchos textos: columna, cada uno con su propio vaivén
+  if (movil && !charca && !reduce){
     nodos.forEach((el, i) => {
       const lado = i % 2 ? -1 : 1;
       el.style.setProperty('--dur', (7 + Math.random() * 5).toFixed(1) + 's');
@@ -415,7 +482,7 @@ Los invito a ver a quienes no suelen ver, los invito a dar lo máximo. Solo exis
       el.style.setProperty('--g2', (lado * (0.4 + Math.random() * .7)).toFixed(2) + 'deg');
     });
   }
-  if (movil && reduce) nodos.forEach(el => el.style.animation = 'none');
+  if (movil && !charca && reduce) nodos.forEach(el => el.style.animation = 'none');
 
   if (!reduce && !movil){
     const estados = nodos.map((el, i) => ({
