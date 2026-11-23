@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baladas después de Terán — Marcela Ibarra</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Baladas después de Terán: un poemario de Marcela Ibarra. Dieciséis poemas sobre el amor joven y lo que queda después.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --claro:#f5f0e8; --claro-suave:rgba(245,240,232,.78);
+    --oro:#d9b36a; --lila:#cdb7ec;
+    --vidrio:rgba(20,12,26,.55);
+    --borde:rgba(255,255,255,.16);
+    --noche:#171020;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--noche)}
+  body{
+    background:transparent;color:var(--claro);
+    font-family:'Newsreader',Georgia,serif;font-size:18px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  ::selection{background:var(--oro);color:#241a2e}
+
+  #fondoBase{
+    position:fixed;inset:0;z-index:-2;
+    background:linear-gradient(to bottom, #232a24, #4a4230 50%, #21180f);
+  }
+  #fondoBase::before{
+    content:"";position:absolute;inset:0;
+    background-image:url('ibanni-pano.jpg');
+    background-repeat:no-repeat;
+    background-position:right center;
+    background-size:cover;
+  }
+  #fondoBase::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(rgba(16,10,22,.5), rgba(16,10,22,.34) 50%, rgba(16,10,22,.58));
+  }
+  @media (orientation: portrait){
+    #fondoBase::before{
+      background-position:76% center;
+    }
+  }
+  #agua{
+    position:fixed;inset:0;width:100%;height:100%;z-index:-1;
+    pointer-events:none;mix-blend-mode:overlay;
+  }
+
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(18,11,24,.55);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--borde);
+  }
+  nav{max-width:1060px;margin:0 auto;padding:0 28px;height:64px;
+    display:flex;align-items:center;justify-content:space-between}
+  .mono{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+    font-size:1.35rem;color:var(--claro);text-decoration:none}
+  .volver{font-family:'Archivo',sans-serif;font-size:.72rem;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--claro-suave);
+    text-decoration:none}
+  .volver:hover{color:var(--oro)}
+  .nav-medio{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;
+    color:var(--claro-suave);background:none;border:0;cursor:pointer;padding:6px 10px}
+  .nav-medio:hover{color:var(--oro)}
+
+  main{padding:7vh 20px 4vh}
+  /* ---------- la hoja (misma línea que el lector de textos) ---------- */
+  .hoja{
+    --tinta:#2a2521; --tinta-suave:#5a5048; --sepia:#9a7434; --linea:rgba(120,90,50,.22);
+    max-width:640px;margin:0 auto;position:relative;
+    padding:68px 72px 40px;border-radius:3px;color:var(--tinta);
+    background-color:rgba(246,239,226,.83);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at 50% 30%, rgba(255,252,245,.35), transparent 70%),
+      radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(150,112,60,.13));
+    backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 0 0 1px rgba(120,90,50,.12),
+      0 30px 70px -25px rgba(0,0,0,.65),0 8px 20px -10px rgba(0,0,0,.35);
+  }
+  .progreso{position:absolute;left:0;top:0;height:3px;background:var(--sepia);opacity:.55;
+    transition:width .5s ease;border-radius:3px 0 0 0}
+  .vista{animation:entra .55s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .sc{font-family:'Archivo',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--sepia)}
+  .orn{display:block;text-align:center;color:var(--sepia);opacity:.8;font-size:1rem}
+
+  /* portada */
+  .portada{text-align:center}
+  .portada h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+    font-size:clamp(3rem,9vw,4.6rem);line-height:.95;margin-top:22px;color:var(--tinta)}
+  .portada .despues{display:block;font-family:'Cormorant Garamond',serif;font-style:normal;
+    font-size:.42em;letter-spacing:.04em;margin-top:10px;color:var(--tinta-suave)}
+  .portada .autora{font-family:'Cormorant Garamond',serif;font-size:1.25rem;margin:22px 0 26px;color:var(--tinta-suave)}
+  .portada .epigrafe{font-family:'Newsreader',serif;font-style:italic;font-weight:300;
+    color:var(--tinta-suave);margin:24px 0 32px}
+  .botones{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+  .btn{font-family:'Archivo',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;text-decoration:none;color:var(--tinta);cursor:pointer;
+    border:1px solid rgba(120,90,50,.4);border-radius:999px;padding:11px 20px;background:rgba(255,252,245,.5)}
+  .btn:hover{border-color:var(--sepia);color:var(--sepia)}
+  .btn.lleno{background:var(--tinta);color:#f6efe2;border-color:var(--tinta)}
+  .btn.lleno:hover{background:var(--sepia);border-color:var(--sepia);color:#fff}
+  .btn small{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;
+    letter-spacing:0;text-transform:none;font-weight:500;margin-top:2px}
+
+  .indice{margin:46px auto 0;max-width:430px;text-align:left;list-style:none;counter-reset:none}
+  .indice .sc{display:block;text-align:center;margin-bottom:14px}
+  .indice a{display:flex;align-items:baseline;gap:10px;padding:7px 2px;text-decoration:none;
+    color:var(--tinta);font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:500}
+  .indice a .n{font-size:.95rem;color:var(--sepia);min-width:2.4em;font-variant:small-caps}
+  .indice a .puntos{flex:1;border-bottom:1px dotted var(--linea);transform:translateY(-4px)}
+  .indice a .leido{font-size:.8rem;color:var(--sepia)}
+  .indice a:hover{color:var(--sepia)}
+  .indice a.actual{font-style:italic}
+  .indice .sep{height:10px}
+
+  /* poema */
+  .cabeza{text-align:center}
+  .cabeza h2{font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--tinta);
+    font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;margin-top:12px;text-wrap:balance}
+  .cabeza .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;
+    color:var(--tinta-suave);margin-top:6px}
+  .cabeza .orn{margin-top:18px}
+  .versos{margin:36px auto 0;width:fit-content;max-width:100%;
+    font-family:'Newsreader',Georgia,serif;font-size:1.08rem;line-height:1.75;color:var(--tinta);
+    font-optical-sizing:auto;font-feature-settings:"kern","liga","onum"}
+  .estrofa + .estrofa{margin-top:1.35em}
+  .verso{display:block;padding-left:1.4em;text-indent:-1.4em;text-wrap:pretty}
+  .versos.prosa{width:auto}
+  .fin{text-align:center;margin-top:40px;letter-spacing:.5em;color:var(--sepia);opacity:.7}
+
+  .pasos{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    margin:44px -32px 0;padding-top:18px;border-top:1px solid var(--linea)}
+  .pasos a, .pasos button{background:none;border:0;cursor:pointer;text-decoration:none;color:var(--tinta-suave);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;padding:8px 6px;max-width:42%;text-align:left}
+  .pasos .sig{text-align:right}
+  .pasos .medio{font-family:'Archivo',sans-serif;font-style:normal;font-size:.62rem;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--sepia);text-align:center;max-width:none}
+  .pasos a:hover,.pasos button:hover{color:var(--sepia)}
+  .pasos .vacio{visibility:hidden}
+  .pasos .flecha{font-style:normal;color:var(--sepia)}
+
+  footer{border-top:1px solid var(--borde);margin-top:40px;
+    background:rgba(18,11,24,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .pie{max-width:1060px;margin:0 auto;padding:32px 28px 44px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-family:'Archivo',sans-serif;font-size:.72rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--claro-suave)}
+  .pie a{color:var(--claro-suave);text-decoration:none}
+  .pie a:hover{color:var(--oro)}
+  @media (max-width:720px){
+    body{font-size:16px}
+    main{padding:3vh 10px 3vh}
+    .hoja{padding:52px 24px 28px}
+    .versos{font-size:1.02rem;line-height:1.7}
+    .pasos{margin:36px -8px 0}
+    .pasos a{font-size:.98rem}
+    .nav-medio{display:none}
+    .pie{font-size:.62rem}
+  }
+  @media (prefers-reduced-motion: reduce){.vista{animation:none}}
+</style>
+</head>
+<body>
+<div id="fondoBase" aria-hidden="true"></div>
+<canvas id="agua" aria-hidden="true"></canvas>
+
+<header>
+  <nav aria-label="principal">
+    <a class="mono" href="index.html">m/i</a>
+    <button class="nav-medio" onclick="ir(0)">Baladas después de Terán</button>
+    <a class="volver" href="index.html">← volver</a>
+  </nav>
+</header>
+
+<main>
+  <article class="hoja" aria-live="polite">
+    <div class="progreso" id="progreso"></div>
+    <div id="vista"></div>
+  </article>
+</main>
+
+<footer>
+  <div class="pie">
+    <span>© 2026 Marcela Ibarra · fondo: obra propia</span>
+    <a href="https://instagram.com/marcelaibarrap" target="_blank" rel="noopener">@marcelaibarrap</a>
+  </div>
+</footer>
+
+<script>
+  // ============================================================
+  //  LOS POEMAS VIVEN AQUÍ. Cada poema tiene "estrofas",
+  //  y cada estrofa es una lista de versos.
+  // ============================================================
+  const POEMAS = [{"titulo": "El eco de mil mundos", "estrofas": [["El eco de mil mundos parece tocar el cielo", "Y regresar con nostalgia porque no logró pasar.", "¿Qué me ocurre? ¿Qué me ata? Aquí yo no pertenezco.", "Famélico de existencia hay deseo de vuelo alzar."], ["El eco de mil mundos parece no tener forma.", "Pasa desapercibido. Sus alas de ángel no son.", "Notoriamente y, por suerte, lo delata su dulzura.", "Vesania ausente en cualquiera que comparta su dolor."], ["Es un dios, uno muy grande, parece estar encerrado.", "Es hermoso, es inefable y puede tener razón.", "Y tal vez de alguna forma, terminó un poco encerrado,", "Su existencia pertenece a algo más grande, ¿al amor?"], ["Porque el eco de mil mundos advierte plena conciencia,", "Su naturaleza divina no es solo para ostentar,", "Este mundo no le es suyo, sublime y fugaz viajero.", "Robar las almas mortales es su placer celestial."]]}, {"titulo": "Mil historias", "estrofas": [["Si fuera muda no hay duda de que mi esencia se quedaría en el aire,", "Flotando en la inmensa nada sin atisbo de esperanza, captada tal vez por nadie.", "De vista muy admirada como por el sol rodeada y, en consecuencia, cegada por la vanidad.", "Si fuera muda y hablara sería poco interesante, la lengua sería más útil para besar."], ["Si viviera tantas vidas que mi memoria cruzara una que otra actividad,", "Y no pudiera contarlo, hablando y enmudecida, de suerte no pasaría.", "Sin mayor trascendencia iría, no por falta de ella mas por capacidad de notar,", "y seguramente vacías serían tan solo una lista de necesaria innecesariedad."], ["Muda colecciono vidas, con un corazón herido y más de un eón por contar,", "No estoy envanecida, el reloj para y me afana ¿Hay algo que confesar?", "Mil historias en el aire solo son percibidas por aquel que puede mirar.", "La mudez se desvanece, la esencia ya se revela, con tinta se hace notar."]]}, {"titulo": "Soñar", "estrofas": [["El niño se ha dormido junto a la damisela,", "Quien le ha contado una historia de viajes en globo al mar.", "Su voz dulce ha penetrado muy dentro de su conciencia.", "Y en sueños el niño vuela sonriente por altamar."], ["Se encuentra con dos dragones, de escamas rojo escarlata,", "Él sabe que ellos no existen pero los sabe enfrentar.", "Continúa volando alto, dentro del mar profundo.", "Él sabe que está en su mente pero lo va a disfrutar."], ["Él crece por cada noche que viaja a un lugar distinto.", "Le permite ser más libre que cuando despierto está.", "Osado y muy resiliente se vuelve en cada leyenda,", "Es un niño diferente desde que puede soñar."], ["Su viaje ya ha terminado, el sol real ya dio una vuelta.", "Con afán comienza el día para que pueda acabar.", "La noche llega en penumbra y con ella la damisela,", "Aquella que le permite todas las noches viajar."]]}, {"titulo": "Sueños", "estrofas": [["Ilusoriamente cómodo era tenerte al dormir,", "Un constructo de existencia convenía más que vivir.", "Pues la realidad pesaba, no bastaba, era irreal.", "En los sueños todo siempre lograba ser mucho más."], ["No era sano, era rendirse ¿Se podía hacer algo más?", "Construir muros y encerrarme en la paz de mi pensar.", "No había alas, las cortaste, tampoco podía volar.", "Era lóbrego el abismo, bastaba para soñar."], ["Ver tu rostro me calmaba, mas no te podía escuchar.", "Me desvanecía en tu pecho justo antes de despertar.", "El relente me quemaba, no era lógico sentir.", "El corazón se quebraba, deseaba poder morir."], ["No acababa, era perpetuo, no tenerte y padecer.", "Mas el filo que punzaba era todo tu desdén.", "La certeza de saber que nada está destinado,", "Y que fueron decisiones lo que aquel daño causaron."], ["Despertar y darme cuenta de que aún yo sigo aquí,", "Y que solo con mis manos es que lograré salir.", "Que diste vuelta hace mucho y por mí no volverás,", "Que depende de mí misma cambiar el soñar por actuar."]]}, {"titulo": "Cielo nocturno", "estrofas": [["Del cielo nocturno ha caído un conejo blanco perla,", "revela que está de paso, que no pertenece aquí.", "El reflejo tornasolado que emana de sus orejas,", "ningún conejo en la Tierra las puede tener así."], ["Un sabueso de azabache observa toda la escena,", "Lo ve caer en dos patas y saltar por los alhelíes.", "Ha quedado enamorado y ese hecho lo delata.", "Ningún perro de este mundo vería a un conejito así."], ["El cielo nocturno ha bajado a recuperar a su estrella,", "Tiene miles en su pecho y una por la que se va a desvivir.", "¿Quién lo diría? Que el cielo, tuviera sus preferencias.", "La noche permanecerá oscura si no vuelven a subir."], ["El sabueso de azabache recorre el campo en sigilo.", "Su estrella se encuentra sola bebiendo de un manantial.", "De un salto queda en sus patas, atrapó a su conejito.", "Ahora él debe preguntarle si lo quiere acompañar."], ["«Mi dulce cielo nocturno… ya no estoy en tu mundo»", "Y una lágrima recorre el rostro del triste can.", "Levanta sus negras patas y el conejito se escapa,", "Sus orejas tornasoladas ya no van a regresar."], ["Este mundo le ha robado la luz al cielo nocturno,", "Prefiere quedarse abajo que subir con su pesar.", "La luna se ha enseñoreado, alguien deberá cubrirlo", "Mientras haya luz de luna nadie lo va a notar."], ["Que en vez de negro hay vacío y las estrellas están muertas,", "Que el sabueso y el conejo ya no subieron más.", "Que en un mundo de pesares viven todas las estrellas", "Colgadas del negro pelaje de un enamorado can."]]}, {"titulo": "Distancia", "estrofas": [["Jugueteando con las olas solo con imaginar.", "Despertando entre las aguas sin tocar profundidad.", "Aferrándose con fuerza y con mucha ingenuidad,", "a la idea de una gran vida juntos por la eternidad."], ["Los foráneos se encontraron en un mundo divergente,", "No servían ni obedecían a una razón aparente.", "Siendo extraños, no entre ellos, sino para los demás.", "Era todo un acertijo su fiel manera de amar."], ["Es quimérico decían, lo hacen solo por mostrar.", "Mas cada noche sus almas danzaban en libertad.", "Sus hombros se sostenían, sus manos llenas estaban.", "Así se vieran vacías, sus sonrisas lo probaban."], ["Que aunque hubiera solo ausencia, nunca estuvieron más plenos.", "Rebosaban del genuino para siempre, eran eternos.", "Parecían tan solo humanos, que cumplían con su pasar.", "Mas fueron llamas amantes sin leyes que respetar."]]}, {"titulo": "Tal vez", "estrofas": [["Tal vez de noche podría visitarte, sin tocarte, sin mirar.", "Tal vez, con suficiente luna, podría pedir por su magia.", "Los poetas creen en eso, en viajes en globo en mar."], ["Tal vez pudiera crear, con más suerte que palabras.", "Un camino, uno corto, que me lleve donde estás.", "Tal vez en la inmensa nada vive un todo, uno infinito.", "Uno que construimos aún antes de comenzar."], ["Tal vez nada es nuestra culpa, estábamos destinados.", "Tu nombre me pertenece ¿No lo has de adivinar?", "Tal vez nos encontraremos, en algún mundo, uno más lejos.", "Uno donde no cuente la vida que ha de pasar."], ["Tal vez en ese entonces sí cuenten nuestras promesas.", "Aquellas que nos hicimos cuando podíamos soñar.", "O tal vez nos olvidemos, de lo poco, de lo bello.", "Del nosotros que pensamos que podríamos alcanzar."], ["Tal vez solo en la bruma se mantengan los recuerdos.", "De un amor, de esos de vida, que no se pudo tocar."]]}, {"titulo": "Una cándida sirena", "estrofas": [["Una cándida sirena yacía solitaria en un lago.", "Había llegado por aire, de un viaje en globo por mar.", "Un cuervo gentil y rudo, hasta allí la había acompañado.", "La cuidó durante el viaje, que no fuera a desmayar."], ["Pues es obvio, es conocido, que es de todas las sirenas", "Requerir de amor y mimos, para no irse a marchitar.", "Pues como flores marinas decoran inmensas aguas,", "Más etérea es su belleza, se mide por su cantar."], ["Entonces el cuervo rudo, sombrío, solitario, oscuro,", "Coincidió con la sirena mientras iba en su pasar.", "Escuchó su canto débil y acercándose inseguro,", "La bondad que en él vivía lo instó a la sirena cuidar."], ["Su voz frágil se rompía con cada intento de canto,", "Mas volar no precisaba de palabras o cantar.", "Tal vez podrían ser las aguas, que estaban bastante turbias,", "Quizás un cambio de ambiente la ayudaría a mejorar."], ["Mientras voló junto a ella, pendiente no desmayara,", "Vio la luz que en la sirena no paró de deslumbrar,", "Y aunque ella no cantaba lo enamoró con su esencia,", "Así que al llegar al lago el cuervo optó por anclar."], ["Pasaron algunos años y entre los dos se cuidaron,", "El lago yacía precioso, perfecto para explorar.", "Mas la sirena cuidaba de no bajar muy profundo,", "Precisaba que su cuervo no fuera a solo quedar."], ["Las alas de aquel preso ya se estaban atrofiando,", "Tampoco volaba alto, no se quería alejar.", "Consideraba crucial, necesaria su presencia,", "No quería que la sirena de nuevo pudiera enfermar."], ["Los dulces enamorados, por más que distintos fueran,", "No habían caído en la cuenta del daño de su encerrar.", "Ambos se habían encontrado, se habían mantenido vivos,", "Mas ahora era necesario nadar y poder volar."], ["El canto de la sirena, dulce se había tornado,", "Estaba lleno de fuerza, la habían sabido mimar.", "Sin embargo, no bastaba, algo se había estancado,", "Y un día pasó un forastero muy cerca para nadar."], ["El canto de la sirena, al ver a otro ser distinto,", "Enamoró a aquel viajero, sin culpa y con su pesar.", "Y cuando el cuervo bajaba, de su volar matutino,", "Sintió una traición profunda, de su sirena, al llegar."], ["Pues ella necesitaba nadar a un lugar distinto,", "Ir a explorar las aguas que el cuervo encontró al volar.", "No importa cuánto le amara, el lago quedaba chico,", "Su fugaz naturaleza le exigía ya libertad."], ["Un cuervo gentil y rudo, sombrío, solitario, oscuro,", "Cayó por una sirena y su desalmado cantar.", "Pues es obvio, es conocido, que es de todas las sirenas,", "Enamorar a sus presas hasta hacerlas naufragar."]]}, {"titulo": "No oses", "estrofas": [["En un pequeño pueblecito de colores muy vivaces", "Vivía una joven oscura y a la vez llena de luz.", "A veces se camuflaba, y entre ríos de cachivaches", "Lograba que no notaran el cargar de una triste cruz."], ["Los hombros solían sangrarle, sus roces eran voraces", "El peso de varios mundos ampliaba su longitud.", "Nadie conocía su rostro, le encantaban los disfraces,", "Sin embargo, no vivía con más que con gratitud."], ["La obscuridad la habitaba, sus garras eran mordaces", "Cicatrices invisibles la tapaban en alud.", "Mas su mirada brillaba, no era notado por nadie", "Que aquella joven contaba con poca o nada virtud."], ["Lograba pasar campante, inadvertida, galante,", "Triunfante por ser llamada reina de la rectitud.", "Más frágil era su historia, su vida podía quebrarse,", "Su aura la encadenaba a una dulce esclavitud."], ["En un pequeño pueblecito de colores muy vivaces", "Con calidez y sonrisas te lograrán envolver", "No oses pasar de largo sin antes allí fijarte,", "En una joven que brilla aún en su padecer."]]}, {"titulo": "Terán", "estrofas": [["Terán se ha enamorado de la dama equivocada,", "mas ya es demasiado tarde para volver atrás.", "Viviendo en la oscuridad que es propia a los marginados,", "se ha topado con la luna que hará sus noches brillar."], ["Con atisbos de princesa al pobre lo han enredado,", "se ha perdido en un camino dulce pero mordaz.", "Terán abraza la vida y empieza a elevarse alto,", "la caída no es problema si aún él la puede amar."], ["Confiado en su propio brazo recorre con ella el mundo,", "se ha atrevido a gran hazaña pecando tal vez de audaz.", "La dama su vida ha dado y dice por siempre amarlo,", "En él ya no cabe duda, dócil se dejó atrapar."], ["Con dulces besos lo arrulla, su luz no se aparta nunca,", "la dama a Terán protege con dedicación tenaz.", "La dama se vuelve eterna, trasciende cualquier barrera", "Promete al joven dormido “Jamás me voy a alejar.”"], ["Terán se ha enamorado de la dama equivocada", "que amó con amor intenso, mas de una forma fugaz."]]}, {"titulo": "Mi sol y estrellas", "estrofas": [["Dentro de un submarino torpemente construido,", "ahondando en el mar profundo que yace dentro de mí.", "Me veo como en un espejo, sin reconocer mi rostro,", "y pienso si en otro tiempo podría notarme feliz."], ["El amor me mueve a verme, sin apartar la vista,", "visceral e infantil me niego a no intentar todo por ti.", "Se empieza a quebrar el vidrio, los ojos se cristalizan,", "la niña que adentro vive, reclama ser infeliz."], ["Mi sol y estrellas me mira, intentando ser más que buena,", "atraviesa el mar profundo y ve la tristeza en mí.", "¿Soy la mujer que esperas? Mi alma inquieta pregunta.", "No puedo tocarte ahora, ni puedo cambiar por ti."], ["Tu voz se escucha con eco, retumba dentro en mi pecho,", "“Todo está bien, cariño, voy a quedarme aquí”", "No quiero voltear mi rostro, me consuela tu promesa,", "amarme a mí me permite poder vivir para ti."]]}, {"titulo": "Un ángel", "estrofas": [["Después de mirar por mucho, dentro de un pozo profundo,", "El fondo comienza a verse más claro de lo normal.", "El negro oscuro aún persiste, sin embargo ante mis ojos,", "La silueta de un noble ángel se comienza ya a formar."], ["Podría atreverme a decirte que lo estoy imaginando,", "¿Serías tan cruel de acabar con la ilusión del amar?", "Pude quedarme en el cielo escucho un sutil lamento,", "Y vagamente recuerdo lo hermoso de aquel clamar."], ["Si no vas a estar conmigo podrías haberme matado", "Me faltó misericordia, se atreve aquel a alegar.", "Mi mundo ya se ha acabado, en vano ha sido encontrarme", "Solo ha probado una vida y ya desea renunciar."], ["Un par de heridas punzantes su voz han agudizado,", "Su intento de levantarse me hace desear bajar.", "Sin embargo, de aquel pozo, mucho salir me ha costado.", "Solo espero que mi ángel pueda volando asomar."], ["Que recuerde los momentos que de gozo lo llenaron,", "La inmensidad de canciones que pudo coleccionar.", "Que su corazón frustrado se haga fuerte con el hecho,", "De que aquel juego de amarnos nos mantuvo en el andar."], ["Que se olvide de lo trágico, por más que sea lacerante.", "Pues la sangre ya es la prueba de que vivo pudo estar.", "Si la dicha de encontrarnos lo elevó arriba hasta el cielo,", "Lo magnificó del hecho gratitud ha de cobrar."], ["Podría atreverme a decirte que lo estoy justificando,", "Que el dolor se convirtió en un precio digno de pagar.", "¿Serías capaz de medir los límites que cruzamos?", "No existe alguno que pueda mirar al otro y juzgar."], ["Después de mirar por mucho, dentro de un pozo profundo,", "El fondo comienza a verse más claro de lo normal.", "El negro oscuro aún persiste, sin embargo ante mis ojos,", "Un ángel herido yace, sin que le pueda salvar."]]}, {"titulo": "Dentro de mí", "estrofas": [["Entonces pensé mucho en ti. Siempre lo hacía.", "Si sabes lo que la palabra siempre quiere decir.", "En todo o en cualquier tiempo. Así parecía.", "No salías ni por un segundo fuera de mí."], ["La agonía se hacía mi dueña, todo dolía.", "Mis suspiros eran solo un dulce juego para ti.", "Apelaba torpemente a una irreal melancolía,", "Una que ya hace mucho se había alejado de ti."], ["No existe un mundo sin ti, así parecía.", "Pero al final seguí viva aunque no había rastro de ti.", "Pude seguir respirando, y sí, a veces dolía.", "Mas el tiempo se encargó de dar su final feliz."], ["Alguna vez exististe ¿Quién lo diría?", "Alguna vez fuiste el mundo de una persona infeliz.", "Gracias por hacerme fuerte, te necesitaba, lo hacía.", "No entendía que el amor siempre estuvo dentro de mí."]]}, {"titulo": "De a pasos", "estrofas": [["Constantemente procuro, no más allá de mi mente,", "Construir de partes cortadas una versión de mí.", "Una que sin esfuerzo con gran carisma enamore,", "Y me ayude a recordar aquella luz que perdí."], ["No es una versión distante, de a pasos es alcanzable.", "La firmeza con que ande lo puede determinar.", "No es perfecta, pero es bella, dentro de lo razonable.", "Radiante la suelto al mundo resuelta a lograr triunfar."], ["La noche me desvanece, me quema y llego a ser nada.", "Un día logró ser sorteado, de a pasos se pudo andar.", "El tiempo cobra factura, más vale estar preparada.", "Que cada día me permita vivirlo para contar."]]}, {"titulo": "Un día", "estrofas": [["Un día tal vez te levantas y puede ser como ayer.", "Lleno de monotonía, cálida o fría ¿Importa? Tal vez.", "O tal vez abres los ojos y te sorprenda ¿Lo haría?", "Que todo en lo que creías deja de ser."], ["Mas si no es grata la sorpresa ¿Quién lo diría?", "¿Estás dispuesto a incomodarte a costa de no perecer?", "¿Podrás aferrarte a algo? Atarte a la vida.", "Conseguir que te sostenga algo más que lo que fue."], ["Un día en contra de todo se alza un ave en las cenizas.", "Y tienes que buscar sentido a cada paso que des.", "Que el pie que rehúsa andar entienda que hay una meta.", "¿Cuánto tiempo tomará la búsqueda que has de emprender?"], ["Un día las vidas vividas serán tan solo una vida.", "El fuego que hizo arder mundos, solo un recuerdo de ayer.", "Y ojalá tengas testigos, una pluma, algo de tinta.", "Pues un día encierras los monstruos y empiezas a andar otra vez."]]}, {"titulo": "Terán y Selene", "estrofas": [["Y mientras todo lo que era sólido se desvanecía en el aire,", "Terán permanecía inmóvil mirando a su alrededor, en copos desintegrarse,", "aquel abeto que amaba, y que por tanto tiempo había sido su compañero más fiel de infancia."], ["Imaginó los copos de Selene y las calles, poco dignas de admiración,", "mezclándose en un camino hacia la nada.", "Contemplaba la escena y se preguntaba si esa, quizás, era la razón por la que se sintió invisible toda su vida."], ["No era negro ni era blanco.", "Ni de día, ni de noche.", "—«¿Selene, me escuchas?»—"], ["El silencio zumbaba, como si el alma de las cosas hablara... o lo intentara.", "—«¡Selene! ¡Selene!»— decía Terán. —«Me gustaba el mundo que estaba conociendo contigo» —"], ["Fue más y menos tiempo que lo que costaría atravesar la ciudad de la luna por mar,", "y vio la flor más bonita empezar a formarse.", "Como si lo desvanecido hubiera colisionado para crear vida otra vez."], ["—«¿Ves la lluvia, Terán?»—", "Y cuando pestañeó, su abeto seguía en el mismo lugar.", "Jamás lo había visto tan lindo.", "Todo lucía igual, tan real y tan bello.", "—«¡Selene! Selene. Creo que te amo.»—"]], "sub": "(o el abeto que sobrevivió al desvanecimiento)", "epilogo": true}];
+
+  const ROM = ['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
+  const N = POEMAS.length;
+  const vista = document.getElementById('vista');
+  const barra = document.getElementById('progreso');
+  const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const marca = i => POEMAS[i-1].epilogo ? 'Epílogo' : ROM[i];
+
+  function guardado(){ try { return parseInt(localStorage.getItem('baladas-ultimo')) || 0; } catch(e){ return 0; } }
+  function guardar(i){ try { localStorage.setItem('baladas-ultimo', i); } catch(e){} }
+
+  function portada(){
+    const u = guardado();
+    const seguir = u >= 1 && u <= N
+      ? `<a class="btn" href="#/${u}">Seguir leyendo<small>${esc(POEMAS[u-1].titulo)}</small></a>` : '';
+    const items = POEMAS.map((p,k) => `
+      ${p.epilogo ? '<li class="sep"></li>' : ''}
+      <li><a href="#/${k+1}" class="${u===k+1?'actual':''}"><span class="n">${p.epilogo ? 'epíl.' : ROM[k+1].toLowerCase()}</span>${esc(p.titulo)}<span class="puntos"></span>${u===k+1?'<span class="leido">aquí ibas</span>':''}</a></li>`).join('');
+    return `<div class="portada">
+      <span class="sc">poemario</span>
+      <h1>Baladas<span class="despues">después de Terán</span></h1>
+      <p class="autora">Mar</p>
+      <span class="orn">❦</span>
+      <p class="epigrafe">oh to be young and in love</p>
+      <div class="botones">
+        <a class="btn lleno" href="#/1">Empezar a leer</a>${seguir}
+      </div>
+      <ol class="indice"><span class="sc">índice</span>${items}</ol>
+    </div>`;
+  }
+
+  function poema(i){
+    const p = POEMAS[i-1];
+    const ant = i > 1 ? POEMAS[i-2] : null, sig = i < N ? POEMAS[i] : null;
+    const versos = p.estrofas.map(e => `<p class="estrofa">${e.map(v => `<span class="verso">${esc(v)}</span>`).join('')}</p>`).join('');
+    return `<div class="cabeza">
+        <span class="sc">${marca(i)}</span>
+        <h2>${esc(p.titulo)}</h2>
+        ${p.sub ? `<p class="sub">${esc(p.sub)}</p>` : ''}
+        <span class="orn">❦</span>
+      </div>
+      <div class="versos">${versos}</div>
+      ${sig ? '' : '<div class="fin">· · ·</div>'}
+      <nav class="pasos" aria-label="entre poemas">
+        ${ant ? `<a href="#/${i-1}"><span class="flecha">←</span> ${esc(ant.titulo)}</a>` : `<a href="#/" ><span class="flecha">←</span> portada</a>`}
+        <a class="medio" href="#/">índice</a>
+        ${sig ? `<a class="sig" href="#/${i+1}">${esc(sig.titulo)} <span class="flecha">→</span></a>` : `<a class="sig" href="index.html">volver a Mar <span class="flecha">→</span></a>`}
+      </nav>`;
+  }
+
+  function actual(){ const m = location.hash.match(/^#\/(\d+)/); const i = m ? +m[1] : 0; return (i>=1 && i<=N) ? i : 0; }
+  function ir(i){ location.hash = i ? '#/'+i : '#/'; }
+
+  function pintar(){
+    const i = actual();
+    vista.innerHTML = i ? poema(i) : portada();
+    vista.classList.remove('vista'); void vista.offsetWidth; vista.classList.add('vista');
+    barra.style.width = i ? (i / N * 100) + '%' : '0%';
+    document.title = (i ? POEMAS[i-1].titulo + ' — ' : '') + 'Baladas después de Terán';
+    if (i) guardar(i);
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+  addEventListener('hashchange', pintar);
+  pintar();
+
+  // teclado: ← →
+  addEventListener('keydown', e => {
+    const i = actual();
+    if (e.key === 'ArrowRight' && i < N) ir(i+1);
+    if (e.key === 'ArrowLeft') ir(Math.max(0, i-1));
+  });
+  // deslizar en celular
+  let x0 = null, y0 = null;
+  addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, {passive:true});
+  addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8){
+      const i = actual();
+      if (dx < 0 && i < N) ir(i+1);
+      if (dx > 0) ir(Math.max(0, i-1));
+    }
+  }, {passive:true});
+
+  // ---------- Destellos de agua ----------
+  (function(){
+    const canvas = document.getElementById('agua');
+    const ctx = canvas.getContext('2d');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let W, H, sim, sctx, out, cur, prev, d, corriendo = false;
+
+    function construir(){
+      const aspecto = innerHeight / innerWidth;
+      W = innerWidth < 720 ? 200 : 288;
+      H = Math.max(160, Math.min(560, Math.round(W * aspecto)));
+      sim = document.createElement('canvas');
+      sim.width = W; sim.height = H;
+      sctx = sim.getContext('2d');
+      out = sctx.createImageData(W, H);
+      cur = new Int16Array(W * H);
+      prev = new Int16Array(W * H);
+      d = out.data;
+      canvas.width = innerWidth; canvas.height = innerHeight;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      if (!corriendo){ corriendo = true; requestAnimationFrame(frame); }
+    }
+    construir();
+    let espera;
+    window.addEventListener('resize', function(){
+      clearTimeout(espera); espera = setTimeout(construir, 200);
+    });
+
+    function drop(x, y, f){
+      if (!prev) return;
+      x |= 0; y |= 0;
+      if (x < 2 || y < 2 || x > W - 3 || y > H - 3) return;
+      prev[y * W + x] = f;
+    }
+    window.addEventListener('pointermove', function(e){
+      drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 520);
+    });
+    window.addEventListener('pointerdown', function(e){
+      drop(e.clientX / innerWidth * W, e.clientY / innerHeight * H, 900);
+    });
+    setInterval(function(){
+      drop(12 + Math.random() * (W - 24), 12 + Math.random() * (H - 24), 360);
+    }, 2800);
+
+    function frame(){
+      for (let y = 1; y < H - 1; y++){
+        const row = y * W;
+        for (let x = 1; x < W - 1; x++){
+          const i = row + x;
+          let v = ((prev[i-1] + prev[i+1] + prev[i-W] + prev[i+W]) >> 1) - cur[i];
+          v -= v >> 5;
+          cur[i] = v;
+        }
+      }
+      const t = prev; prev = cur; cur = t;
+      for (let y = 1; y < H - 1; y++){
+        for (let x = 1; x < W - 1; x++){
+          const i = y * W + x;
+          const dx = prev[i-1] - prev[i+1];
+          const di = i * 4;
+          let a = dx < 0 ? -dx : dx;
+          a = a > 210 ? 210 : a;
+          if (dx > 0){ d[di] = 255; d[di+1] = 242; d[di+2] = 214; }
+          else { d[di] = 16; d[di+1] = 10; d[di+2] = 26; }
+          d[di+3] = a;
+        }
+      }
+      sctx.putImageData(out, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
+      requestAnimationFrame(frame);
+    }
+  })();
+</script>
+</body>
+</html>
