@@ -213,6 +213,17 @@
     text-transform:lowercase;color:var(--claro-suave)}
   .cuadro li.tech::before{background:var(--lila)}
   .meta{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+  .cuadro .lema{margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.12rem;line-height:1.35;color:var(--claro)}
+  .cuadro .lema::before{content:"“";color:var(--oro)} .cuadro .lema::after{content:"”";color:var(--oro)}
+  .tracks{list-style:none;margin-top:16px;columns:2;column-gap:22px;counter-reset:pista}
+  .tracks li{counter-increment:pista;break-inside:avoid;padding:5px 0 5px 1.9em;margin:0;
+    font-size:.9rem;font-weight:300;line-height:1.35;color:var(--claro-suave)}
+  .tracks li::before{content:counter(pista,decimal-leading-zero);left:0;top:.62em;width:auto;height:auto;
+    border-radius:0;background:none;font-family:'Archivo',sans-serif;font-size:.62rem;font-weight:600;
+    letter-spacing:.08em;color:var(--oro);opacity:.85}
+  .tracks li.single{color:var(--claro)}
+  .tracks li.single::after{content:" ✦";color:var(--oro);font-size:.75em}
   .estado{
     font-family:'Archivo',sans-serif;font-size:.64rem;font-weight:600;
     letter-spacing:.14em;text-transform:uppercase;
@@ -438,6 +449,28 @@
             </ul>
             <div class="meta">
               <span class="estado vivo">vivo</span>
+            </div>
+          </article>
+
+          <article class="cuadro">
+            <span class="num">02 · álbum · para Diego</span>
+            <h3>a love story <span>in reverse</span></h3>
+            <p class="lema">As far as I’m concerned, love is just a guy’s name</p>
+            <ol class="tracks">
+              <li>Half-Awake</li>
+              <li>Before We Meet</li>
+              <li>Not a Dream</li>
+              <li>Echo</li>
+              <li class="single" title="sencillo">Too</li>
+              <li>Sorry</li>
+              <li>Everything Dims Without&nbsp;U</li>
+              <li>Call Me Something</li>
+              <li>Worth the Grief</li>
+              <li>I Became</li>
+              <li class="single" title="sencillo">I Choose You Again</li>
+            </ol>
+            <div class="meta">
+              <span class="estado oro">11 canciones</span>
             </div>
           </article>
         </div>
