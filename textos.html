@@ -96,29 +96,66 @@
 
   #lector{
     position:fixed;inset:0;z-index:50;display:none;
-    background:rgba(10,6,14,.6);backdrop-filter:blur(5px);
-    overflow-y:auto;padding:6vh 20px;
+    background:rgba(12,7,16,.38);
+    overflow-y:auto;padding:7vh 20px 9vh;
   }
+  /* sin opacity/filter aquí: rompería el desenfoque de la hoja */
   #lector.abierto{display:block}
+  #lector.abierto .hoja{animation:sube .6s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes sube{from{transform:translateY(22px)}to{transform:none}}
+
+  /* ---------- la hoja: papel cálido, apenas traslúcido ---------- */
   .hoja{
-    max-width:680px;margin:0 auto;background:#1e1526;
-    border:1px solid var(--borde);
-    border-radius:10px;padding:56px 56px 64px;position:relative;
-    box-shadow:0 40px 90px -30px rgba(0,0,0,.8);
+    --tinta:#2a2521; --tinta-suave:#4a423b; --sepia:#9a7434;
+    max-width:700px;margin:0 auto;position:relative;
+    padding:72px 80px 84px;border-radius:3px;color:var(--tinta);
+    background-color:rgba(246,239,226,.88);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at 50% 40%, rgba(255,252,245,.35), transparent 70%),
+      radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(150,112,60,.13));
+    backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.5) inset,
+      0 0 0 1px rgba(120,90,50,.12),
+      0 30px 70px -25px rgba(0,0,0,.65),
+      0 8px 20px -10px rgba(0,0,0,.35);
   }
-  .hoja .tipo{font-family:'Archivo',sans-serif;font-size:.66rem;font-weight:600;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--oro)}
-  .hoja h2{font-family:'Cormorant Garamond',serif;font-weight:600;
-    font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.1;margin-top:10px;color:var(--claro)}
-  .hoja .cuerpo{margin-top:26px;font-weight:300;white-space:pre-line;color:var(--claro-suave)}
+  .hoja .tipo{display:block;clear:both;text-align:center;font-family:'Archivo',sans-serif;font-size:.64rem;
+    font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--sepia)}
+  .hoja h2{font-family:'Cormorant Garamond',serif;font-weight:500;text-align:center;
+    font-size:clamp(2rem,4.6vw,2.9rem);line-height:1.08;margin-top:14px;color:var(--tinta);
+    text-wrap:balance}
+  .hoja h2::after{content:"❦";display:block;margin-top:18px;font-size:1rem;color:var(--sepia);opacity:.8}
+
+  .hoja .cuerpo{margin-top:34px;font-family:'Newsreader',Georgia,serif;font-weight:400;
+    font-size:1.06rem;line-height:1.72;color:var(--tinta);
+    font-optical-sizing:auto;font-feature-settings:"kern","liga","onum";
+    hyphens:auto;-webkit-hyphens:auto}
+  .hoja .cuerpo p{text-align:justify;text-indent:1.6em;white-space:pre-line;
+    text-wrap:pretty;hanging-punctuation:first}
+  .hoja .cuerpo p + p{margin-top:.55em}
+  .hoja .cuerpo p:first-child{text-indent:0}
+  .hoja .cuerpo p:first-child::first-letter{
+    font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--sepia);
+    float:left;font-size:4.1em;line-height:.8;padding:.06em .09em 0 0}
+
+  /* poemas: verso a la izquierda, sin sangría ni capitular */
+  .hoja .cuerpo.verso{font-style:italic;font-size:1.08rem;line-height:1.8}
+  .hoja .cuerpo.verso p{text-align:left;text-indent:0;hyphens:manual}
+  .hoja .cuerpo.verso p + p{margin-top:.9em}
+  .hoja .cuerpo.verso p:first-child::first-letter{float:none;font:inherit;color:inherit;padding:0}
+  .hoja .cuerpo::after{content:"· · ·";display:block;text-align:center;margin-top:40px;
+    letter-spacing:.5em;color:var(--sepia);opacity:.7;font-style:normal}
+
   .cerrar{
-    position:sticky;top:0;float:right;margin:-36px -36px 0 0;
-    font-family:'Archivo',sans-serif;font-size:.7rem;font-weight:600;
-    letter-spacing:.14em;text-transform:uppercase;
-    background:#1e1526;border:1px solid var(--borde);border-radius:999px;
-    padding:8px 16px;cursor:pointer;color:var(--claro-suave);
+    position:sticky;top:0;float:right;margin:-48px -56px 0 0;z-index:2;
+    font-family:'Archivo',sans-serif;font-size:.66rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;
+    background:rgba(246,239,226,.92);border:1px solid rgba(120,90,50,.28);border-radius:999px;
+    padding:8px 16px;cursor:pointer;color:var(--tinta-suave);
   }
-  .cerrar:hover{border-color:var(--oro);color:var(--oro)}
+  .cerrar:hover{border-color:var(--sepia);color:var(--sepia)}
 
   footer{border-top:1px solid var(--borde);margin-top:40px;
     background:rgba(18,11,24,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
@@ -131,6 +168,11 @@
 
   @media (max-width:720px){
     body{font-size:16px}
+    #lector{padding:3vh 10px 6vh}
+    .hoja{padding:52px 26px 60px}
+    .hoja .cuerpo{font-size:1.02rem;line-height:1.68}
+    .hoja .cuerpo p{text-indent:1.2em}
+    .cerrar{margin:-38px -16px 0 0}
     #estanque{height:auto;min-height:0;display:grid;gap:16px;padding:30px 22px}
     .flota{position:static;width:100%;padding:20px 20px;
       background:rgba(19,12,25,.84);backdrop-filter:none;-webkit-backdrop-filter:none}
@@ -219,6 +261,7 @@ Esa niña vivió la colonización, lucho contra su padre aun en contra del amor 
     {
       tipo: "Casi Poema",
       titulo: "Enough Wonder to Stay",
+      idioma: "en",
       resumen: "Pensamientos en ingles a las 3 am porque why not?",
       cuerpo: `The thing is, I have never been able to do anything just for a living, not even live.
 
@@ -322,7 +365,16 @@ Los invito a ver a quienes no suelen ver, los invito a dar lo máximo. Solo exis
     const t = TEXTOS[idx];
     document.getElementById('lector-tipo').textContent = t.tipo;
     document.getElementById('lector-titulo').textContent = t.titulo;
-    document.getElementById('lector-cuerpo').textContent = t.cuerpo;
+    const cuerpo = document.getElementById('lector-cuerpo');
+    cuerpo.innerHTML = '';
+    cuerpo.lang = t.idioma || 'es';
+    cuerpo.classList.toggle('verso', /poema/i.test(t.tipo));
+    t.cuerpo.trim().split(/\n\s*\n/).forEach(par => {
+      const p = document.createElement('p');
+      p.textContent = par.trim();
+      cuerpo.appendChild(p);
+    });
+    document.getElementById('lector').scrollTop = 0;
     document.getElementById('lector').classList.add('abierto');
     document.body.style.overflow = 'hidden';
   }
