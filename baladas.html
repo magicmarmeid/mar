@@ -171,6 +171,14 @@
   }
   @media (prefers-reduced-motion: reduce){.vista{animation:none}}
 </style>
+<script>
+  // Visitas propias: abre la página una vez con ?yo para no contarte (y ?yo=no para volver a contarte).
+  try {
+    const q = new URLSearchParams(location.search);
+    if (q.has('yo')) q.get('yo') === 'no' ? localStorage.removeItem('umami.disabled') : localStorage.setItem('umami.disabled', '1');
+  } catch (e) {}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="0cecddf2-fc46-4a13-ab23-01d1f735646f" data-domains="magicmarmeid.github.io"></script>
 </head>
 <body>
 <div id="fondoBase" aria-hidden="true"></div>
